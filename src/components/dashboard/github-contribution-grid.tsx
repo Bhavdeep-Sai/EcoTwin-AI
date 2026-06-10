@@ -215,6 +215,8 @@ export function GithubContributionGrid({ activities }: ContributionGridProps) {
       {/* Top-level Floating Tooltip */}
       {hoveredDay && hoveredDay.date && (
         <div 
+          id="heatmap-tooltip"
+          role="tooltip"
           className="contrib-tooltip text-left"
           style={{ left: `${tooltipPos.x}px`, top: `${tooltipPos.y}px` }}
         >
@@ -380,20 +382,24 @@ export function GithubContributionGrid({ activities }: ContributionGridProps) {
                   <div key={`${month.name}-${month.year}`} className="month-block">
                     {/* Month mini-grid */}
                     <div className="month-grid">
-                      {month.cells.map((cell) => (
-                        <div
-                          key={cell.dateString}
-                          role="gridcell"
-                          tabIndex={0}
-                          aria-label={`${cell.dateString}: ${cell.count} activities, Saved ${cell.carbonAvoided} kg CO₂e`}
-                          className={`cell cell-level-${getLevel(cell.count)}`}
-                          style={{ gridRow: cell.date.getDay() + 1 }}
-                          onMouseEnter={(e) => handleShowTooltip(cell, e.currentTarget)}
-                          onMouseLeave={handleHideTooltip}
-                          onFocus={(e) => handleShowTooltip(cell, e.currentTarget)}
-                          onBlur={handleHideTooltip}
-                        />
-                      ))}
+                      {month.cells.map((cell) => {
+                        const isHovered = hoveredDay && hoveredDay.dateString === cell.dateString
+                        return (
+                          <div
+                            key={cell.dateString}
+                            role="gridcell"
+                            tabIndex={0}
+                            aria-label={`${cell.dateString}: ${cell.count} activities, Saved ${cell.carbonAvoided} kg CO₂e`}
+                            aria-describedby={isHovered ? 'heatmap-tooltip' : undefined}
+                            className={`cell cell-level-${getLevel(cell.count)}`}
+                            style={{ gridRow: cell.date.getDay() + 1 }}
+                            onMouseEnter={(e) => handleShowTooltip(cell, e.currentTarget)}
+                            onMouseLeave={handleHideTooltip}
+                            onFocus={(e) => handleShowTooltip(cell, e.currentTarget)}
+                            onBlur={handleHideTooltip}
+                          />
+                        )
+                      })}
                     </div>
                     {/* Month Label Centered below its grid */}
                     <div className="text-center text-[10px] text-muted-foreground/85 font-semibold mt-2 select-none">

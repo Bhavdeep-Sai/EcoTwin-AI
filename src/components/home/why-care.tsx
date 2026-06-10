@@ -44,7 +44,7 @@ export function WhyCare() {
               Why does this matter?
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Our individual choices add up. While we can't solve the climate crisis alone, understanding our impact is the first step toward meaningful, systemic change. 
+              Our individual choices add up. While we can&apos;t solve the climate crisis alone, understanding our impact is the first step toward meaningful, systemic change. 
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
               It is not about guilt—it is about empowerment. When you know where your emissions come from, you can make informed decisions that benefit both the planet and yourself.

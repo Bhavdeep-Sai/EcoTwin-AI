@@ -21,7 +21,7 @@ export function CtaSection() {
           className="space-y-8"
         >
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-background">
-            You don't have to change everything overnight.
+            You don&apos;t have to change everything overnight.
           </h2>
           
           <p className="text-lg md:text-xl text-muted/80 max-w-2xl mx-auto leading-relaxed font-medium">

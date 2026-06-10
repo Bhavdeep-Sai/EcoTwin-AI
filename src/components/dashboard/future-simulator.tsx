@@ -12,26 +12,33 @@ import {
   Legend
 } from 'recharts'
 
+import { FOOD_FACTORS, TRANSPORT_FACTORS, ENERGY_FACTORS } from '@/lib/services/carbonFactors'
+
 export function FutureSimulator() {
   const [dietType, setDietType] = useState<number>(2) // 0: Vegan, 1: Vegetarian, 2: Average, 3: Meat Heavy
   const [commuteDistance, setCommuteDistance] = useState<number>(30) // km per day
   const [commuteMode, setCommuteMode] = useState<string>('petrol_car') // petrol_car, electric_vehicle, transit
   const [renewablePct, setRenewablePct] = useState<number>(10) // 0% to 100%
 
-  // Scientific daily rates (in kg CO2e)
-  const DIET_RATES = [0.8, 1.2, 2.0, 3.5] // Vegan, Veg, Avg, Meat-Heavy
+  // Scientific daily rates (in kg CO2e) derived from carbonFactors.ts
+  const DIET_RATES = [
+    FOOD_FACTORS['Vegan / Plant-based'].factor,
+    FOOD_FACTORS['Indian Vegetarian (Dairy-heavy)'].factor,
+    FOOD_FACTORS['Non-Vegetarian'].factor,
+    FOOD_FACTORS['Non-Vegetarian'].factor * 1.25 // Meat-Heavy scaling
+  ]
   const DIET_LABELS = ['Vegan/Plant-based', 'Vegetarian', 'Average Mixed', 'Meat Heavy']
   
   const TRANSPORT_RATES: Record<string, number> = {
-    petrol_car: 0.170,
-    electric_vehicle: 0.045,
-    transit: 0.035,
-    walking_bike: 0.0
+    petrol_car: TRANSPORT_FACTORS['Car (Petrol)'].factor,
+    electric_vehicle: TRANSPORT_FACTORS['Electric Vehicle (EV)'].factor,
+    transit: TRANSPORT_FACTORS['Bus (Public Transport)'].factor,
+    walking_bike: TRANSPORT_FACTORS['Walking / Bicycle'].factor
   }
 
   // Energy: US household average ~30 kWh/day
-  const GRID_CO2_KWH = 0.370 // kg CO2e/kWh
-  const RENEWABLE_CO2_KWH = 0.04
+  const GRID_CO2_KWH = ENERGY_FACTORS['US Average Grid'].factor // kg CO2e/kWh
+  const RENEWABLE_CO2_KWH = ENERGY_FACTORS['Solar / Clean Sourcing'].factor
 
   // Calculate simulated footprint (annual metric tons)
   const calculateAnnualFootprint = () => {

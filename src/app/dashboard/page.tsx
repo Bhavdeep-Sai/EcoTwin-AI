@@ -78,12 +78,36 @@ export default async function DashboardPage() {
   // Real streak: consecutive days with at least one logged activity
   const streakDays = calculateStreak(activities)
 
-  // Fetch real AI insights from DB — top-level import, not dynamic
-  const db = await getDb()
-  const insights: AiInsight[] = db.ai_insights
-    .filter((i) => i.user_id === user.id)
-    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-    .slice(0, 3)
+  // Fetch real AI insights from DB (Supabase with local fallback)
+  let insights: AiInsight[] = []
+  try {
+    const { data: dbInsights, error: insErr } = await supabase
+      .from('ai_insights')
+      .select('*')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
+      .limit(3)
+
+    if (!insErr && dbInsights && dbInsights.length > 0) {
+      insights = (dbInsights as unknown as AiInsight[]).map((i) => ({
+        id: i.id,
+        user_id: i.user_id,
+        activity_id: i.activity_id,
+        content: i.content,
+        created_at: i.created_at,
+      }))
+    }
+  } catch (err) {
+    console.warn('Supabase insights query failed, falling back to local database:', err)
+  }
+
+  if (insights.length === 0) {
+    const db = await getDb()
+    insights = db.ai_insights
+      .filter((i) => i.user_id === user.id)
+      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+      .slice(0, 3)
+  }
 
   return (
     <div className="relative min-h-screen bg-background text-foreground flex-1 w-full border-t border-border/20 transition-colors duration-300">

@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Play } from "lucide-react"
 
 export function FutureSimulatorPreview() {
   const [sliderVal, setSliderVal] = useState(0)

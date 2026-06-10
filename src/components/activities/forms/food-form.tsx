@@ -159,11 +159,11 @@ export function FoodForm() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+          <label htmlFor="meal-type" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
             Meal Type
           </label>
           <Select value={meal} onValueChange={(val) => { if (val) setMeal(val) }}>
-            <SelectTrigger className="w-full h-11 rounded-md bg-background border-border shadow-sm hover:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all px-4 text-xs font-medium text-foreground">
+            <SelectTrigger id="meal-type" className="w-full h-11 rounded-md bg-background border-border shadow-sm hover:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all px-4 text-xs font-medium text-foreground">
               <SelectValue placeholder="Select meal" />
             </SelectTrigger>
             <SelectContent className="rounded-md shadow-lg border-border">
@@ -177,11 +177,11 @@ export function FoodForm() {
 
         {calcMode === 'quick' ? (
           <div className="flex flex-col gap-2">
-            <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            <label htmlFor="diet-category" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Diet Category
             </label>
             <Select value={diet} onValueChange={(val) => { if (val) setDiet(val) }}>
-              <SelectTrigger className="w-full h-11 rounded-md bg-background border-border shadow-sm hover:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all px-4 text-xs font-medium text-foreground">
+              <SelectTrigger id="diet-category" className="w-full h-11 rounded-md bg-background border-border shadow-sm hover:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all px-4 text-xs font-medium text-foreground">
                 <SelectValue placeholder="Select diet" />
               </SelectTrigger>
               <SelectContent className="rounded-md shadow-lg border-border">
@@ -194,9 +194,10 @@ export function FoodForm() {
         ) : (
           <div className="flex flex-col gap-4 col-span-1 md:col-span-2">            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="flex flex-col gap-2 md:col-span-2">
-                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Product Barcode (UPC/EAN)</label>
+                <label htmlFor="product-barcode" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Product Barcode (UPC/EAN)</label>
                 <div className="relative">
                   <Input 
+                    id="product-barcode"
                     type="text" 
                     placeholder="Enter EAN barcode (e.g. 3017670149713)" 
                     value={barcode}
@@ -208,9 +209,10 @@ export function FoodForm() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Weight consumed</label>
+                <label htmlFor="food-weight" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Weight consumed</label>
                 <div className="relative">
                   <Input 
+                    id="food-weight"
                     type="number" 
                     min="1" 
                     placeholder="100" 

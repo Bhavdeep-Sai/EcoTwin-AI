@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { toast } from "sonner"
 import { SubmitButton } from "./submit-button"
 import { useActivityForm } from "./use-activity-form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -38,11 +37,11 @@ export function WasteForm() {
     <form action={action} className="flex flex-col gap-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+          <label htmlFor="waste-type" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
             Waste Type
           </label>
           <Select value={type} onValueChange={(val) => { if (val) setType(val) }}>
-            <SelectTrigger className="w-full h-11 rounded-md bg-background border-border shadow-sm hover:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all px-4 text-xs font-medium text-foreground">
+            <SelectTrigger id="waste-type" className="w-full h-11 rounded-md bg-background border-border shadow-sm hover:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all px-4 text-xs font-medium text-foreground">
               <SelectValue placeholder="Select type" />
             </SelectTrigger>
             <SelectContent className="rounded-md shadow-lg border-border">
@@ -55,11 +54,12 @@ export function WasteForm() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+          <label htmlFor="waste-weight" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
             Weight
           </label>
           <div className="relative">
             <Input 
+              id="waste-weight"
               name="weight_kg" 
               type="number" 
               step="0.1" 

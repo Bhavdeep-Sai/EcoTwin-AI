@@ -1,7 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { geocodeAddress, getRouteDistance } from '@/lib/services/openstreetmap';
+import { createClient } from '@/lib/supabase/server';
 
 export async function GET(request: NextRequest) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   const { searchParams } = new URL(request.url);
   const start = searchParams.get('start');
   const end = searchParams.get('end');
@@ -51,7 +59,8 @@ export async function GET(request: NextRequest) {
       distance_km: route.distance_km,
       duration_seconds: route.duration_seconds
     });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to calculate route' }, { status: 500 });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Failed to calculate route';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

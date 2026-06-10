@@ -2,7 +2,6 @@ import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import { HeroSection } from "@/components/activities/hero-section"
 import { ActivityCard } from "@/components/activities/activity-card"
-import { Leaf } from "lucide-react"
 
 export default async function ActivitiesPage() {
   const supabase = await createClient()

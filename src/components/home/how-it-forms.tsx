@@ -42,7 +42,7 @@ export function HowItForms() {
             From daily habits to global impact.
           </h2>
           <p className="text-lg text-muted-foreground mt-4 max-w-2xl mx-auto">
-            A footprint isn't just about what comes out of a tailpipe. It includes the entire invisible lifecycle of the things we consume.
+            A footprint isn&apos;t just about what comes out of a tailpipe. It includes the entire invisible lifecycle of the things we consume.
           </p>
         </motion.div>
 

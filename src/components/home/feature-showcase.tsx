@@ -75,7 +75,7 @@ export function FeatureShowcase() {
                   <p className="text-xs text-foreground/90">{cat.log}</p>
                 </div>
                 <div>
-                  <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">How it's calculated</h4>
+                  <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">How it&apos;s calculated</h4>
                   <p className="text-xs text-foreground/90">{cat.calc}</p>
                 </div>
                 <div>

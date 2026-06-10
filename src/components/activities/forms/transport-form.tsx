@@ -126,7 +126,7 @@ export function TransportForm() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+          <label htmlFor="transport-mode" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
             Mode of Transport
           </label>
           <Select value={mode} onValueChange={(val) => {
@@ -135,7 +135,7 @@ export function TransportForm() {
               setRouteData(null)
             }
           }}>
-            <SelectTrigger className="w-full h-11 rounded-md bg-background border-border shadow-sm hover:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all px-4 text-xs font-medium text-foreground">
+            <SelectTrigger id="transport-mode" className="w-full h-11 rounded-md bg-background border-border shadow-sm hover:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all px-4 text-xs font-medium text-foreground">
               <SelectValue placeholder="Select mode" />
             </SelectTrigger>
             <SelectContent className="rounded-md shadow-lg border-border">
@@ -155,11 +155,12 @@ export function TransportForm() {
         {/* Dynamic Inputs based on calcMode */}
         {calcMode === 'quick' ? (
           <div className="flex flex-col gap-2">
-            <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            <label htmlFor="transport-distance" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Distance
             </label>
             <div className="relative">
               <Input 
+                id="transport-distance"
                 name="distance_km" 
                 type="number" 
                 step="0.1" 
@@ -177,9 +178,10 @@ export function TransportForm() {
           <div className="flex flex-col gap-4 col-span-1 md:col-span-2">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Origin</label>
+                <label htmlFor="transport-origin" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Origin</label>
                 <div className="relative">
                   <Input 
+                    id="transport-origin"
                     type="text" 
                     placeholder="e.g. Seattle, WA or London Heathrow" 
                     value={origin}
@@ -191,9 +193,10 @@ export function TransportForm() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Destination</label>
+                <label htmlFor="transport-destination" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Destination</label>
                 <div className="relative">
                   <Input 
+                    id="transport-destination"
                     type="text" 
                     placeholder="e.g. Portland, OR or Kings Cross" 
                     value={destination}

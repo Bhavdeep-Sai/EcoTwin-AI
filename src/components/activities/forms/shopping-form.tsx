@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { toast } from "sonner"
 import { SubmitButton } from "./submit-button"
 import { useActivityForm } from "./use-activity-form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -35,11 +34,11 @@ export function ShoppingForm() {
     <form action={action} className="flex flex-col gap-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+          <label htmlFor="shopping-category" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
             Item Category
           </label>
           <Select value={category} onValueChange={(val) => { if (val) setCategory(val) }}>
-            <SelectTrigger className="w-full h-11 rounded-md bg-background border-border shadow-sm hover:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all px-4 text-xs font-medium text-foreground">
+            <SelectTrigger id="shopping-category" className="w-full h-11 rounded-md bg-background border-border shadow-sm hover:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all px-4 text-xs font-medium text-foreground">
               <SelectValue placeholder="Select category" />
             </SelectTrigger>
             <SelectContent className="rounded-md shadow-lg border-border">
@@ -52,7 +51,7 @@ export function ShoppingForm() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+          <label htmlFor="shopping-cost" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
             Cost
           </label>
           <div className="relative">
@@ -60,6 +59,7 @@ export function ShoppingForm() {
               ₹
             </div>
             <Input 
+              id="shopping-cost"
               name="cost" 
               type="number" 
               step="0.01" 

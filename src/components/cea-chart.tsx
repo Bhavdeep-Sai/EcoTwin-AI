@@ -25,14 +25,17 @@ export function CeaChart() {
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
-    setIsMounted(true)
+    const timer = setTimeout(() => {
+      setIsMounted(true)
+    }, 0)
+    return () => clearTimeout(timer)
   }, [])
 
   if (!isMounted) {
     return (
       <div className="w-full mt-8 bg-card p-6 rounded-2xl border shadow-sm flex flex-col items-center min-h-[550px]">
         <h3 className="text-lg font-bold mb-4 text-center">
-          India's Grid Emission Factors & Renewable Generation (CEA Baseline)
+          India&apos;s Grid Emission Factors & Renewable Generation (CEA Baseline)
         </h3>
         <p className="text-sm text-muted-foreground mb-6 text-center max-w-2xl">
           Comparing the Fossil Fuel Average vs. Overall Weighted Average (kg CO₂/kWh) alongside the growth in Net Renewable Generation (GWh).
@@ -45,7 +48,7 @@ export function CeaChart() {
   return (
     <div className="w-full mt-8 bg-card p-6 rounded-2xl border shadow-sm flex flex-col items-center">
       <h3 className="text-lg font-bold mb-4 text-center">
-        India's Grid Emission Factors & Renewable Generation (CEA Baseline)
+        India&apos;s Grid Emission Factors & Renewable Generation (CEA Baseline)
       </h3>
       <p className="text-sm text-muted-foreground mb-6 text-center max-w-2xl">
         Comparing the Fossil Fuel Average vs. Overall Weighted Average (kg CO₂/kWh) alongside the growth in Net Renewable Generation (GWh).

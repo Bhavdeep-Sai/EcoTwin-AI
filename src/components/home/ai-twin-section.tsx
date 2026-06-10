@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { MessageSquare, Bot, User, Sparkles } from "lucide-react"
+import { MessageSquare, Bot, Sparkles } from "lucide-react"
 
 export function AiTwinSection() {
   return (
@@ -24,7 +24,7 @@ export function AiTwinSection() {
               Meet your digital twin.
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              EcoTwin AI isn't just a static calculator; it's an intelligent conversational assistant that understands your historical footprint.
+              EcoTwin AI isn&apos;t just a static calculator; it&apos;s an intelligent conversational assistant that understands your historical footprint.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
               Ask questions about your daily choices and receive personalized, scientifically-backed guidance. The AI translates complex emissions data into relatable, everyday analogies so you can easily understand your impact.
@@ -58,7 +58,7 @@ export function AiTwinSection() {
               <div className="flex-1 p-4 space-y-4 overflow-y-auto bg-muted/20">
                 <div className="flex justify-end">
                   <div className="bg-primary text-primary-foreground p-3 rounded-2xl rounded-tr-sm max-w-[85%] text-sm shadow-sm">
-                    Should I take the bus or drive to work today? It's about 10 miles.
+                    Should I take the bus or drive to work today? It&apos;s about 10 miles.
                   </div>
                 </div>
 
@@ -73,7 +73,7 @@ export function AiTwinSection() {
                     Taking the bus will generate about <strong className="text-primary">1.4kg CO₂e</strong>. 
                     Driving your car would generate <strong className="text-orange-500">3.3kg CO₂e</strong>.
                     <br/><br/>
-                    By choosing the bus, you'll save <strong className="text-primary">1.9kg of CO₂</strong>—roughly the equivalent of keeping a 60W lightbulb turned off for an entire week!
+                    By choosing the bus, you&apos;ll save <strong className="text-primary">1.9kg of CO₂</strong>—roughly the equivalent of keeping a 60W lightbulb turned off for an entire week!
                   </div>
                 </motion.div>
               </div>

@@ -130,7 +130,7 @@ export function EnergyForm() {
     <form action={action} className="flex flex-col gap-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+          <label htmlFor="energy-source" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
             Energy Source
           </label>
           <Select value={source} onValueChange={(val) => {
@@ -139,7 +139,7 @@ export function EnergyForm() {
               if (val === 'Solar') setGridData(null)
             }
           }}>
-            <SelectTrigger className="w-full h-11 rounded-md bg-background border-border shadow-sm hover:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all px-4 text-xs font-medium text-foreground">
+            <SelectTrigger id="energy-source" className="w-full h-11 rounded-md bg-background border-border shadow-sm hover:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all px-4 text-xs font-medium text-foreground">
               <SelectValue placeholder="Select source" />
             </SelectTrigger>
             <SelectContent className="rounded-md shadow-lg border-border">
@@ -150,11 +150,12 @@ export function EnergyForm() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+          <label htmlFor="kwh-used" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
             Electricity Used
           </label>
           <div className="relative">
             <Input 
+              id="kwh-used"
               type="number" 
               step="0.1" 
               min="0.1" 
@@ -174,9 +175,10 @@ export function EnergyForm() {
       {source === 'Grid' && (
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">US ZIP Code (Loads EPA eGRID Subregion Factors)</label>
+            <label htmlFor="zip-code" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">US ZIP Code (Loads EPA eGRID Subregion Factors)</label>
             <div className="relative">
               <Input 
+                id="zip-code"
                 type="text" 
                 maxLength={5}
                 placeholder="Enter 5-digit ZIP code (optional)" 

@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
 import { Database, Search, Calculator, BarChart3, ExternalLink } from "lucide-react"
 
 export function Methodology() {
@@ -19,7 +18,7 @@ export function Methodology() {
             Science, not guesswork.
           </h2>
           <p className="text-lg text-muted-foreground mt-4 max-w-2xl mx-auto">
-            We don't invent numbers. Every calculation in EcoTwin AI is rooted in verified scientific methodologies and official global datasets.
+            We don&apos;t invent numbers. Every calculation in EcoTwin AI is rooted in verified scientific methodologies and official global datasets.
           </p>
         </div>
 
