@@ -436,7 +436,11 @@ export function GithubContributionGrid({ activities }: ContributionGridProps) {
                 }
               `}</style>
 
-              <div className="heatmap-layout relative">
+              <div 
+                className="heatmap-layout relative"
+                role="grid"
+                aria-label="Carbon action history — each cell represents one day of activity"
+              >
                 {/* Render Each Month Block dynamically starting from joining month */}
                 {monthsData.map((month) => (
                   <div key={`${month.name}-${month.year}`} className="month-block">

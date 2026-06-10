@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
-import { getActivitiesSummary } from "@/lib/actions/activities"
+import { getActivitiesSummary, calculateStreak } from "@/lib/actions/activities"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { DashboardCharts } from "@/components/dashboard/charts"
 import { AppleHealthRings } from "@/components/dashboard/apple-health-rings"
@@ -53,8 +53,8 @@ export default async function DashboardPage() {
   // Calculate dynamic score (Start at 1000, subtract 5 points per kg of CO2)
   const carbonScore = activities.length === 0 ? 1000 : Math.max(0, 1000 - Math.floor(totalImpact * 5))
 
-  // Streak: calculate consecutive days or default to a gamified count
-  const streakDays = activities.length > 0 ? Math.min(activities.length + 2, 8) : 0
+  // Real streak: consecutive days with at least one logged activity
+  const streakDays = calculateStreak(activities)
 
   // Fetch real AI insights from DB
   const { getDb } = await import('@/lib/db/localStore')
@@ -165,6 +165,8 @@ export default async function DashboardPage() {
                   transportKg={transportImpact}
                   foodKg={foodImpact}
                   energyKg={energyImpact}
+                  shoppingKg={shoppingImpact}
+                  wasteKg={wasteImpact}
                 />
               </div>
 

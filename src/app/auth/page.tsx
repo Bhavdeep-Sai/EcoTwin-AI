@@ -91,11 +91,9 @@ export default function AuthPage() {
         
         <div className="relative z-10 max-w-lg space-y-8 lg:pl-8">
           <div className="space-y-4">
-            <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-foreground">
-              Welcome to
-            </h1>
-            <h1 className="text-6xl lg:text-7xl font-black tracking-tighter text-green-600 dark:text-green-500">
-              EcoTwin AI
+            <h1 className="text-4xl lg:text-5xl font-black tracking-tighter leading-tight">
+              <span className="text-foreground font-bold text-3xl lg:text-4xl block mb-1">Welcome to</span>
+              <span className="text-green-600 dark:text-green-500 text-6xl lg:text-7xl block">EcoTwin AI</span>
             </h1>
             <p className="text-lg lg:text-xl text-muted-foreground mt-4">
               Your personal AI carbon assistant <br className="hidden lg:block" />for a smarter, greener tomorrow.
@@ -188,13 +186,6 @@ export default function AuthPage() {
                   </div>
                 </div>
                 
-                <div className="flex items-center justify-between pt-1">
-                  <label className="flex items-center gap-2 text-sm cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 cursor-pointer rounded border-gray-300 text-green-600 focus:ring-green-500 accent-green-600" />
-                    <span className="text-muted-foreground">Remember me</span>
-                  </label>              
-                </div>
-
                 <Button className="w-full h-12 text-base rounded-xl bg-[#009944] hover:bg-green-700 text-white transition-colors mt-2" type="submit" disabled={isLoading}>
                   {isLoading ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : null}
                   Sign in {isLoading ? "..." : <ArrowRight className="ml-2 h-5 w-5" />}

@@ -1,5 +1,3 @@
-"use client"
-
 export interface EmissionFactor {
   factor: number
   unit: string

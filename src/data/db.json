@@ -5,11 +5,11 @@
       "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
       "category": "food",
       "title": "Vegan Breakfast",
-      "carbon_impact_kg": 1,
+      "carbon_impact_kg": 0.5,
       "activity_date": "2026-06-10",
       "details": {
         "meal_type": "Breakfast",
-        "diet_category": "Vegan"
+        "diet_category": "Vegan / Plant-based"
       }
     },
     {
@@ -17,10 +17,10 @@
       "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
       "category": "transport",
       "title": "10km via Bike",
-      "carbon_impact_kg": 2.5,
+      "carbon_impact_kg": 0.0,
       "activity_date": "2026-06-10",
       "details": {
-        "mode": "Bike",
+        "mode": "Walking / Bicycle",
         "distance_km": 10
       }
     },
@@ -28,8 +28,8 @@
       "id": "7dabe75e-8db2-46fa-aa9e-d063a2071b02",
       "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
       "category": "waste",
-      "title": "2kg of Organic",
-      "carbon_impact_kg": 1,
+      "title": "2kg of Organic Waste",
+      "carbon_impact_kg": 1.0,
       "activity_date": "2026-06-10",
       "details": {
         "waste_type": "Organic",
@@ -42,7 +42,7 @@
       "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
       "category": "electricity",
       "title": "10 kWh from Grid",
-      "carbon_impact_kg": 4,
+      "carbon_impact_kg": 3.7,
       "activity_date": "2026-06-10",
       "details": {
         "source": "Grid",
@@ -54,7 +54,7 @@
       "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
       "category": "shopping",
       "title": "₹500 on Clothing",
-      "carbon_impact_kg": 250,
+      "carbon_impact_kg": 0.9,
       "activity_date": "2026-06-10",
       "details": {
         "item_category": "Clothing",
@@ -66,19 +66,19 @@
       "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
       "category": "food",
       "title": "Meat-heavy Lunch",
-      "carbon_impact_kg": 5,
+      "carbon_impact_kg": 2.8,
       "activity_date": "2026-06-10",
       "details": {
         "meal_type": "Lunch",
-        "diet_category": "Meat-heavy"
+        "diet_category": "Non-Vegetarian"
       }
     },
     {
       "id": "150f304e-06e2-41cb-bf5a-2a0eb9393ee9",
       "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
       "category": "waste",
-      "title": "5kg of Paper",
-      "carbon_impact_kg": 5,
+      "title": "5kg of Paper Waste",
+      "carbon_impact_kg": 4.5,
       "activity_date": "2026-06-10",
       "details": {
         "waste_type": "Paper",
@@ -91,7 +91,7 @@
       "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
       "category": "shopping",
       "title": "₹200 on Clothing",
-      "carbon_impact_kg": 1.2,
+      "carbon_impact_kg": 0.36,
       "activity_date": "2026-06-10",
       "details": {
         "item_category": "Clothing",
@@ -104,7 +104,7 @@
       "id": "39c26b91-8e8f-45ad-b169-124b6b0f339a",
       "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
       "activity_id": "460578b1-7a1b-43cc-a7b9-2792594b763d",
-      "content": "\"Great job on reducing your carbon footprint with that vegan breakfast and bike ride, EcoStar! Next time, consider offsetting your electricity usage by investing in renewable energy credits, which can offset up to 4kg of CO2 for just $1.\"",
+      "content": "Great job on your vegan breakfast and bike ride! Consider switching to renewable electricity to cut your grid footprint from 3.7 kg to near-zero.",
       "created_at": "2026-06-10T05:34:09.870Z"
     },
     {

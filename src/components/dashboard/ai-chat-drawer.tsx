@@ -73,6 +73,8 @@ export function AiChatDrawer() {
       <div className="fixed bottom-6 right-6 z-40">
         <button
           onClick={() => setIsOpen(true)}
+          aria-label="Open EcoTwin AI Assistant"
+          aria-haspopup="dialog"
           className="relative flex items-center justify-center w-14 h-14 rounded-full bg-primary hover:bg-primary/95 text-primary-foreground shadow-md transition-all duration-300 hover:scale-105 active:scale-95 group cursor-pointer"
         >
           {/* Pulsing ring */}
@@ -99,6 +101,9 @@ export function AiChatDrawer() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 220 }}
+              role="dialog"
+              aria-modal="true"
+              aria-label="EcoTwin AI Carbon Assistant"
               className="fixed top-0 right-0 h-full w-full max-w-[420px] bg-card/95 border-l border-border shadow-2xl z-50 flex flex-col justify-between backdrop-blur-md"
             >
               {/* Header */}
@@ -117,6 +122,7 @@ export function AiChatDrawer() {
                 </div>
                 <button
                   onClick={() => setIsOpen(false)}
+                  aria-label="Close EcoTwin AI Assistant"
                   className="p-1 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
                 >
                   <X className="h-5 w-5" />
