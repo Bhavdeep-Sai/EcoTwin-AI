@@ -7,7 +7,7 @@ import {
   WASTE_FACTORS,
   RECYCLING_MULTIPLIER,
 } from '@/lib/services/carbonFactors'
-import { calculateStreak } from '@/lib/actions/activities'
+import { calculateStreak } from '@/lib/utils/streakUtils'
 
 // ---------------------------------------------------------------------------
 // Carbon Factor Tests — validates that scientific coefficients match sources

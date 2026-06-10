@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { Wind, ShieldAlert, CheckCircle, HelpCircle } from "lucide-react"
+import { useEffect, useState, useCallback } from "react"
+import { Wind, ShieldAlert, CheckCircle, MapPin, RefreshCw } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 
 interface AqiData {
@@ -11,77 +11,112 @@ interface AqiData {
   reporting_area: string
 }
 
+type LocationState = 'idle' | 'requesting' | 'granted' | 'denied' | 'unavailable'
+
 export function AqiCard() {
   const [data, setData] = useState<AqiData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [retryCount, setRetryCount] = useState(0)
+  const [locationState, setLocationState] = useState<LocationState>('idle')
+  const [coords, setCoords] = useState<{ lat: number; lon: number } | null>(null)
 
-  useEffect(() => {
-    let active = true
-
-    async function fetchAqi(lat: number, lon: number) {
-      setLoading(true)
-      try {
-        const res = await fetch(`/api/datasets/aqi?lat=${lat}&lon=${lon}`)
-        if (!res.ok) {
-          const errRes = await res.json().catch(() => ({}))
-          throw new Error(errRes.error || "AirNow API error or key missing.")
-        }
-        const result = await res.json()
-        if (active) {
-          setData(result)
-          setError(null)
-          
-          // Trigger a global custom event or change body background variables for glow effect
-          const aqiVal = result.aqi
-          const root = document.documentElement
-          if (aqiVal <= 50) {
-            // Good: Green Glow
-            root.style.setProperty('--dashboard-glow', 'rgba(16, 185, 129, 0.1)')
-          } else if (aqiVal <= 100) {
-            // Moderate: Amber Glow
-            root.style.setProperty('--dashboard-glow', 'rgba(245, 158, 11, 0.08)')
-          } else {
-            // Unhealthy: Red Glow
-            root.style.setProperty('--dashboard-glow', 'rgba(239, 68, 68, 0.08)')
-          }
-        }
-      } catch (err: any) {
-        if (active) {
-          setError(err.message)
-        }
-      } finally {
-        if (active) {
-          setLoading(false)
-        }
+  const fetchAqi = useCallback(async (lat: number, lon: number) => {
+    setLoading(true)
+    setError(null)
+    try {
+      const res = await fetch(`/api/datasets/aqi?lat=${lat}&lon=${lon}`)
+      if (!res.ok) {
+        const errRes = await res.json().catch(() => ({}))
+        throw new Error(errRes.error || "AQI fetch failed.")
       }
+      const result = await res.json()
+      setData(result)
+
+      // Drive the dashboard glow colour from AQI
+      const root = document.documentElement
+      if (result.aqi <= 50) root.style.setProperty('--dashboard-glow', 'rgba(16, 185, 129, 0.1)')
+      else if (result.aqi <= 100) root.style.setProperty('--dashboard-glow', 'rgba(245, 158, 11, 0.08)')
+      else root.style.setProperty('--dashboard-glow', 'rgba(239, 68, 68, 0.08)')
+    } catch (err: any) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  const requestLocation = useCallback(() => {
+    if (!navigator.geolocation) {
+      setLocationState('unavailable')
+      setLoading(false)
+      setError('Geolocation is not supported by your browser.')
+      return
+    }
+    setLocationState('requesting')
+    setLoading(true)
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude: lat, longitude: lon } = pos.coords
+        setCoords({ lat, lon })
+        setLocationState('granted')
+        fetchAqi(lat, lon)
+      },
+      (err) => {
+        setLocationState('denied')
+        setLoading(false)
+        setError(
+          err.code === err.PERMISSION_DENIED
+            ? 'Location access denied. Allow location in your browser settings, then retry.'
+            : 'Unable to determine your location. Please retry.'
+        )
+      },
+      { timeout: 8000, maximumAge: 300_000 }
+    )
+  }, [fetchAqi])
+
+  // On mount: check permission state and auto-request if prompt or granted
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      setLocationState('unavailable')
+      setLoading(false)
+      setError('Geolocation is not supported by your browser.')
+      return
     }
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          fetchAqi(position.coords.latitude, position.coords.longitude)
-        },
-        () => {
-          // Fallback to default Seattle coordinates
-          fetchAqi(47.6062, -122.3321)
-        },
-        { timeout: 5000 }
-      )
+    if (navigator.permissions) {
+      navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+        if (result.state === 'granted') {
+          // Already granted — fetch silently
+          requestLocation()
+        } else if (result.state === 'prompt') {
+          // Will show browser prompt on request
+          requestLocation()
+        } else {
+          // Denied — show manual button
+          setLocationState('denied')
+          setLoading(false)
+          setError('Location access denied. Allow location in your browser settings, then click Retry.')
+        }
+        result.onchange = () => {
+          if (result.state === 'granted') requestLocation()
+        }
+      }).catch(() => {
+        // Permissions API not available — just request directly
+        requestLocation()
+      })
     } else {
-      // Browser doesn't support geolocation
-      fetchAqi(47.6062, -122.3321)
+      requestLocation()
     }
-
-    return () => {
-      active = false
-    }
-  }, [retryCount])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleRetry = () => {
-    setRetryCount(prev => prev + 1)
+    if (coords) {
+      fetchAqi(coords.lat, coords.lon)
+    } else {
+      requestLocation()
+    }
   }
+
 
   if (loading) {
     return (
@@ -89,6 +124,9 @@ export function AqiCard() {
         <CardHeader className="p-6 pb-3">
           <CardDescription className="text-muted-foreground font-semibold text-xs uppercase tracking-wider">Live Air Quality</CardDescription>
           <div className="h-8 bg-muted rounded w-1/3 mt-2"></div>
+          <p className="text-[10px] text-muted-foreground mt-1">
+            {locationState === 'requesting' ? 'Requesting location…' : 'Fetching AQI…'}
+          </p>
         </CardHeader>
       </Card>
     )
@@ -96,29 +134,34 @@ export function AqiCard() {
 
   if (error || !data) {
     const errorTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+    const isDenied = locationState === 'denied'
     return (
       <Card className="bg-card border-border rounded-xl shadow-sm flex flex-col justify-between h-full min-h-[140px] hover:shadow-md transition-all duration-300">
         <CardHeader className="p-6 pb-2">
           <CardDescription className="text-muted-foreground font-semibold text-xs uppercase tracking-wider">Live Air Quality</CardDescription>
           <CardTitle className="text-sm font-semibold text-destructive mt-1 flex flex-col gap-1">
-            <span>Live AQI temporarily unavailable</span>
+            {isDenied ? (
+              <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5" /> Location Required</span>
+            ) : (
+              <span>Live AQI temporarily unavailable</span>
+            )}
             <span className="text-[10px] text-muted-foreground font-medium normal-case leading-relaxed">
-              Reason: {error || "API rate limit exceeded or key missing."}
+              {error || 'Unable to load air quality data.'}
             </span>
           </CardTitle>
         </CardHeader>
         <CardContent className="px-6 pb-6 pt-0 text-[9px] text-muted-foreground flex flex-col gap-2">
           <div className="border-t border-border/40 pt-2 flex flex-col gap-1 leading-normal font-medium">
-            <div>Provider: <span className="text-foreground">US EPA AirNow API</span></div>
+            <div>Provider: <span className="text-foreground">Open-Meteo + EPA AirNow</span></div>
             <div>Monitored: <span className="text-foreground">PM2.5, Ozone, PM10</span></div>
             <div>Checked: <span className="text-foreground">{errorTime}</span></div>
           </div>
           <button
             type="button"
             onClick={handleRetry}
-            className="w-full mt-1.5 py-1 px-3 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold rounded text-[9px] transition-colors cursor-pointer border border-border/80"
+            className="w-full mt-1.5 py-1.5 px-3 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded text-[10px] transition-colors cursor-pointer flex items-center justify-center gap-1.5"
           >
-            Retry Fetch
+            {isDenied ? <><MapPin className="h-3 w-3" /> Share Location</> : <><RefreshCw className="h-3 w-3" /> Retry Fetch</>}
           </button>
         </CardContent>
       </Card>

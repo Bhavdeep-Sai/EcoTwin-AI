@@ -433,6 +433,20 @@
       "longitude": -0.1277653,
       "display_name": "Greater London, England, United Kingdom",
       "cached_at": "2026-06-10T07:43:20.522Z"
+    },
+    "Chittoor": {
+      "query_address": "Chittoor",
+      "latitude": 13.325036,
+      "longitude": 79.6480611,
+      "display_name": "Chittoor, Andhra Pradesh, India",
+      "cached_at": "2026-06-10T10:04:38.406Z"
+    },
+    "Tirupati": {
+      "query_address": "Tirupati",
+      "latitude": 13.6316368,
+      "longitude": 79.4231711,
+      "display_name": "Tirupati, Tirupati (Urban), Tirupati, Andhra Pradesh, 517500, India",
+      "cached_at": "2026-06-10T10:04:39.450Z"
     }
   },
   "cached_routes": {
@@ -442,6 +456,13 @@
       "duration_seconds": 49811,
       "geometry": null,
       "cached_at": "2026-06-10T07:43:21.316Z"
+    },
+    "13.3250,79.6481:13.6316,79.4232:car": {
+      "route_key": "13.3250,79.6481:13.6316,79.4232:car",
+      "distance_km": 56.29,
+      "duration_seconds": 2831,
+      "geometry": null,
+      "cached_at": "2026-06-10T10:04:40.378Z"
     }
   },
   "owid_co2_data": {},
@@ -457,12 +478,12 @@
     },
     "15.15,76.89": {
       "data": {
-        "aqi": 38,
+        "aqi": 30,
         "category": "Good",
         "pollutant": "PM2.5",
-        "reporting_area": "Simulated Sensor (15.15, 76.89)"
+        "reporting_area": "15.15°N, 76.89°E (Open-Meteo)"
       },
-      "fetched_at": "2026-06-10T07:53:09.652Z"
+      "fetched_at": "2026-06-10T09:40:40.905Z"
     }
   }
 }

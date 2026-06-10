@@ -1,7 +1,7 @@
 import { createClient } from '../supabase/server';
 import { readLocalCache, writeLocalCache } from '../db/environmentalCache';
 
-const AIRNOW_API_KEY = process.env.AIRNOW_API_KEY || ''; // Optional EPA AirNow key
+
 
 // Scientific eGRID Subregion Factors (2024 Release)
 // Values in lbs CO2e per MWh and converted to kg CO2e per kWh
@@ -148,8 +148,9 @@ export async function getEpaGridFactorsByZip(zip: string): Promise<EgridFactor> 
 }
 
 /**
- * Retrieves the current Air Quality Index (AQI) from the EPA AirNow API
- * or falls back to a simulated reading with location coordinates.
+ * Retrieves the current Air Quality Index (AQI).
+ * Primary: Open-Meteo Air Quality API (free, global, no key required).
+ * Secondary: EPA AirNow (US-only, requires AIRNOW_API_KEY).
  */
 export async function getRealtimeAqi(lat: number, lon: number): Promise<{ aqi: number; category: string; pollutant: string; reporting_area: string }> {
   // Round coordinates to 2 decimal places to bucket queries within ~1.1km and enable efficient caching
@@ -169,39 +170,70 @@ export async function getRealtimeAqi(lat: number, lon: number): Promise<{ aqi: n
     }
   } catch {}
 
-  // Attempt live call if API key exists
-  if (AIRNOW_API_KEY) {
+  // ── PRIMARY: Open-Meteo Air Quality API (free, global, no API key needed) ──
+  // Returns European AQI (0-500 scale) and PM2.5 / PM10 concentrations.
+  try {
+    const omUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${roundLat}&longitude=${roundLon}&current=european_aqi,pm2_5,pm10,us_aqi&timezone=auto`;
+    const omRes = await fetch(omUrl, { signal: AbortSignal.timeout(5000) });
+    if (omRes.ok) {
+      const omData = await omRes.json();
+      const current = omData?.current;
+      if (current) {
+        const usAqi = current.us_aqi ?? current.european_aqi ?? 0;
+        const pm25 = current.pm2_5 ?? 0;
+
+        // Map US AQI value to EPA category labels
+        let category = 'Good';
+        if (usAqi > 300) category = 'Hazardous';
+        else if (usAqi > 200) category = 'Very Unhealthy';
+        else if (usAqi > 150) category = 'Unhealthy';
+        else if (usAqi > 100) category = 'Unhealthy for Sensitive Groups';
+        else if (usAqi > 50) category = 'Moderate';
+
+        const result = {
+          aqi: Math.round(usAqi),
+          category,
+          pollutant: pm25 > 0 ? 'PM2.5' : 'PM10',
+          reporting_area: `${roundLat}°N, ${Math.abs(roundLon)}°${roundLon >= 0 ? 'E' : 'W'} (Open-Meteo)`
+        };
+        await cacheAqiLocal(cacheKey, result);
+        return result;
+      }
+    }
+  } catch (err: any) {
+    console.warn('Open-Meteo AQI fetch failed:', err.message);
+  }
+
+  // ── SECONDARY: EPA AirNow (US-only, requires AIRNOW_API_KEY) ──
+  const AIRNOW_API_KEY = process.env.AIRNOW_API_KEY || '';
+  const isWithinUS = lat >= 24 && lat <= 50 && lon >= -125 && lon <= -66;
+  if (AIRNOW_API_KEY && isWithinUS) {
     const url = `https://www.airnowapi.org/aq/observation/latLong/current/?format=application/json&latitude=${roundLat}&longitude=${roundLon}&distance=25&API_KEY=${AIRNOW_API_KEY}`;
     try {
       const res = await fetch(url, { signal: AbortSignal.timeout(3000) });
       if (res.ok) {
         const data = await res.json();
-        // AirNow returns an array of observations (one for PM2.5, one for Ozone, etc.)
         if (Array.isArray(data) && data.length > 0) {
-          // Find the maximum AQI reading from the pollutants reported
           let maxObs = data[0];
           for (const obs of data) {
             if (obs.AQI > maxObs.AQI) maxObs = obs;
           }
-
           const result = {
             aqi: Number(maxObs.AQI),
             category: maxObs.Category.Name,
             pollutant: maxObs.ParameterName,
             reporting_area: maxObs.ReportingArea
           };
-
           await cacheAqiLocal(cacheKey, result);
           return result;
         }
       }
     } catch (error: any) {
-      console.error("EPA AirNow API query failed:", error);
-      throw new Error(`Air quality details temporarily unavailable. Fetch failed: ${error.message || error}`);
+      console.warn('EPA AirNow API query failed:', error.message);
     }
   }
 
-  throw new Error("AirNow API key missing. Genuine live AQI cannot be fetched. Set AIRNOW_API_KEY to retrieve live observations.");
+  throw new Error("Air quality data is currently unavailable. Please check your coordinates or connection.");
 }
 
 async function cacheAqiLocal(key: string, data: any) {

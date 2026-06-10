@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
-import { getActivitiesSummary, calculateStreak } from "@/lib/actions/activities"
+import { getActivitiesSummary } from "@/lib/actions/activities"
+import { calculateStreak } from "@/lib/utils/streakUtils"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { DashboardCharts } from "@/components/dashboard/charts"
 import { AppleHealthRings } from "@/components/dashboard/apple-health-rings"
@@ -105,20 +106,20 @@ export default async function DashboardPage() {
 
         {/* Dynamic Navigation Tabs */}
         <Tabs defaultValue="overview" className="space-y-8">
-          <TabsList className="bg-muted border border-border p-1 rounded-2xl flex flex-nowrap overflow-x-auto scrollbar-none gap-1 max-w-full justify-start w-full sm:w-auto backdrop-blur-md">
-            <TabsTrigger value="overview" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-semibold px-4 py-2 rounded-xl text-sm transition-all cursor-pointer shrink-0">
+          <TabsList className="flex flex-nowrap overflow-x-auto scrollbar-none gap-1">
+            <TabsTrigger value="overview" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-semibold px-4 py-3.5 rounded-lg text-sm transition-all cursor-pointer shrink-0">
               Overview
             </TabsTrigger>
-            <TabsTrigger value="analytics" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-semibold px-4 py-2 rounded-xl text-sm transition-all cursor-pointer shrink-0">
+            <TabsTrigger value="analytics" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-semibold px-4 py-3.5 rounded-lg text-sm transition-all cursor-pointer shrink-0">
               Analytics & History
             </TabsTrigger>
-            <TabsTrigger value="simulator" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-semibold px-4 py-2 rounded-xl text-sm transition-all cursor-pointer shrink-0">
+            <TabsTrigger value="simulator" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-semibold px-4 py-3.5 rounded-lg text-sm transition-all cursor-pointer shrink-0">
               Future Simulator
             </TabsTrigger>
-            <TabsTrigger value="achievements" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-semibold px-4 py-2 rounded-xl text-sm transition-all cursor-pointer shrink-0">
+            <TabsTrigger value="achievements" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-semibold px-4 py-3.5 rounded-lg text-sm transition-all cursor-pointer shrink-0">
               Achievements
             </TabsTrigger>
-            <TabsTrigger value="reports" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-semibold px-4 py-2 rounded-xl text-sm transition-all cursor-pointer shrink-0">
+            <TabsTrigger value="reports" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-semibold px-4 py-3.5 rounded-lg text-sm transition-all cursor-pointer shrink-0">
               Weekly Reports
             </TabsTrigger>
           </TabsList>
@@ -212,15 +213,24 @@ export default async function DashboardPage() {
 
           {/* TAB 2: ANALYTICS & HISTORY */}
           <TabsContent value="analytics" className="outline-none">
-            <Card className="bg-card border-border rounded-xl shadow-sm overflow-hidden">
-              <CardHeader className="border-b border-border/30 pb-4">
-                <CardTitle className="text-lg font-bold text-foreground">Carbon Footprint Analysis</CardTitle>
-                <CardDescription className="text-xs">Visualize your carbon footprint breakdown and comparative grid generation stats.</CardDescription>
-              </CardHeader>
-              <CardContent className="h-[400px] p-0 flex items-center justify-center bg-muted/10">
-                <DashboardCharts activities={activities} />
-              </CardContent>
-            </Card>
+            <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden">
+              {/* Section header */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 pt-6 pb-5 border-b border-border/30">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <svg className="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 22c4.97-5.46 8-9.13 8-13A8 8 0 0 0 4 9c0 3.87 3.03 7.54 8 13z"/>
+                      <circle cx="12" cy="9" r="2.5" fill="currentColor" stroke="none"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-extrabold text-foreground leading-none">Carbon Footprint Analysis</h2>
+                    <p className="text-xs text-muted-foreground mt-1">Visualize your carbon footprint breakdown and comparative grid generation stats.</p>
+                  </div>
+                </div>
+              </div>
+              <DashboardCharts activities={activities} />
+            </div>
           </TabsContent>
 
           {/* TAB 3: FUTURE SIMULATOR */}

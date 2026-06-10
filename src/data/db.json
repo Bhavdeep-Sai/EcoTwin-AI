@@ -17,7 +17,7 @@
       "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
       "category": "transport",
       "title": "10km via Bike",
-      "carbon_impact_kg": 0.0,
+      "carbon_impact_kg": 0,
       "activity_date": "2026-06-10",
       "details": {
         "mode": "Walking / Bicycle",
@@ -29,7 +29,7 @@
       "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
       "category": "waste",
       "title": "2kg of Organic Waste",
-      "carbon_impact_kg": 1.0,
+      "carbon_impact_kg": 1,
       "activity_date": "2026-06-10",
       "details": {
         "waste_type": "Organic",
@@ -97,6 +97,65 @@
         "item_category": "Clothing",
         "cost": 200
       }
+    },
+    {
+      "id": "35bfc30d-4488-43f9-bbe7-bc23a2aa073f",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "transport",
+      "title": "20km via Car (Petrol)",
+      "carbon_impact_kg": 3.4,
+      "activity_date": "2026-06-10",
+      "details": {
+        "mode": "Car (Petrol)",
+        "distance_km": 20
+      }
+    },
+    {
+      "id": "3daffe9b-5c28-44b3-9696-244a15128826",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "shopping",
+      "title": "₹500 on Clothing",
+      "carbon_impact_kg": 0.9,
+      "activity_date": "2026-06-10",
+      "details": {
+        "item_category": "Clothing",
+        "cost": 500
+      }
+    },
+    {
+      "id": "de8f3438-a00d-4fbc-acdf-9ebc324036a6",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "transport",
+      "title": "2km via Car (Petrol)",
+      "carbon_impact_kg": 0.34,
+      "activity_date": "2026-06-10",
+      "details": {
+        "mode": "Car (Petrol)",
+        "distance_km": 2
+      }
+    },
+    {
+      "id": "804868cf-3c5d-4b49-ac36-baec34eb1ab1",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "transport",
+      "title": "Chittoor to Tirupati via Car (Petrol)",
+      "carbon_impact_kg": 9.57,
+      "activity_date": "2026-06-10",
+      "details": {
+        "mode": "Car (Petrol)",
+        "distance_km": 56.29,
+        "origin_address": "Chittoor, Andhra Pradesh, India",
+        "destination_address": "Tirupati, Tirupati (Urban), Tirupati, Andhra Pradesh, 517500, India",
+        "origin_coords": {
+          "lat": 13.325036,
+          "lon": 79.6480611
+        },
+        "destination_coords": {
+          "lat": 13.6316368,
+          "lon": 79.4231711
+        },
+        "duration_minutes": 47
+      }
     }
   ],
   "ai_insights": [
@@ -134,6 +193,34 @@
       "activity_id": "6b66eb61-6823-4a1f-a82d-9310595b9167",
       "content": "\"Looks like shopping for clothing is a big contributor to your carbon footprint - try buying second-hand clothing items next time to reduce your impact by 80%!\"",
       "created_at": "2026-06-10T05:38:13.181Z"
+    },
+    {
+      "id": "af905eae-dd24-4c2d-a453-efbf47ae764c",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "activity_id": "35bfc30d-4488-43f9-bbe7-bc23a2aa073f",
+      "content": "Awesome job on biking 10km earlier, let's keep it going - consider swapping your car for a bike or public transport for shorter trips like this one to reduce your carbon footprint.",
+      "created_at": "2026-06-10T09:47:24.394Z"
+    },
+    {
+      "id": "396f656f-5ed0-4ee6-bdaf-27101fbe61ab",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "activity_id": "3daffe9b-5c28-44b3-9696-244a15128826",
+      "content": "Great job biking to work, but let's offset the emissions from your meat-heavy lunch today - try swapping it for a vegan option next time to reduce your carbon footprint.",
+      "created_at": "2026-06-10T09:48:06.790Z"
+    },
+    {
+      "id": "76c58a5f-7699-42e1-80ce-9685ce9d3670",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "activity_id": "de8f3438-a00d-4fbc-acdf-9ebc324036a6",
+      "content": "Great job using your bike for 10km - next time, consider using it for shorter trips like this 2km one to reduce your carbon footprint. You can save 0.34kg CO₂e per trip by choosing pedal power over petrol!",
+      "created_at": "2026-06-10T09:48:22.164Z"
+    },
+    {
+      "id": "65bc6502-8520-421f-adfe-521712f53903",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "activity_id": "804868cf-3c5d-4b49-ac36-baec34eb1ab1",
+      "content": "Great job on choosing a bike for your first transport activity today. Next time, consider carpooling or using public transport for longer trips like Chittoor to Tirupati to significantly reduce your carbon footprint.",
+      "created_at": "2026-06-10T10:04:48.381Z"
     }
   ]
 }

@@ -19,14 +19,14 @@ export function Footer() {
           <p className="text-sm leading-loose text-center md:text-left text-muted-foreground">
             Built by{" "}
             <Link
-              href="/"
+              href="https://bhavdeepsai.tech"
               className="font-medium underline underline-offset-4"
             >
-              EcoTwin AI
+              Bhavdeep Sai
             </Link>
             . The source code is available on{" "}
             <Link
-              href="/"
+              href="https://github.com/Bhavdeep-Sai/EcoTwin-AI"
               className="font-medium underline underline-offset-4"
             >
               GitHub
