@@ -426,14 +426,14 @@ npm run build
 ## 28. Screenshots, Roadmap & License
 
 ### Screenshots Placeholders
-*   **Homepage Interface:** `![Homepage Redesign](https://raw.githubusercontent.com/Bhavdeep-Sai/EcoTwin-AI/main/public/screenshots/homepage.png)`
-*   **Dashboard concentric Rings:** `![Dashboard Rings](https://raw.githubusercontent.com/Bhavdeep-Sai/EcoTwin-AI/main/public/screenshots/dashboard.png)`
-*   **Contribution Grid Heatmap:** `![GitHub Grid Heatmap](https://raw.githubusercontent.com/Bhavdeep-Sai/EcoTwin-AI/main/public/screenshots/heatmap.png)`
-*   **AI Twin Assistant Chat:** `![AI Chat Drawer](https://raw.githubusercontent.com/Bhavdeep-Sai/EcoTwin-AI/main/public/screenshots/ai_chat.png)`
-*   **Future Impact Simulator:** `![Simulator Slider](https://raw.githubusercontent.com/Bhavdeep-Sai/EcoTwin-AI/main/public/screenshots/simulator.png)`
-*   **Interactive Analytics Charts:** `![Dashboard Analytics](https://raw.githubusercontent.com/Bhavdeep-Sai/EcoTwin-AI/main/public/screenshots/analytics.png)`
-*   **Achievements & Badges Panel:** `![Achievements Badges](https://raw.githubusercontent.com/Bhavdeep-Sai/EcoTwin-AI/main/public/screenshots/achievements.png)`
-*   **Weekly Emissions Report:** `![Weekly Progress Report](https://raw.githubusercontent.com/Bhavdeep-Sai/EcoTwin-AI/main/public/screenshots/weekly_report.png)`
+*   **Homepage Interface:** ![Homepage Redesign](https://raw.githubusercontent.com/Bhavdeep-Sai/EcoTwin-AI/main/public/screenshots/homepage.png)
+*   **Dashboard concentric Rings:** ![Dashboard Rings](https://raw.githubusercontent.com/Bhavdeep-Sai/EcoTwin-AI/main/public/screenshots/dashboard.png)
+*   **Contribution Grid Heatmap:** ![GitHub Grid Heatmap](https://raw.githubusercontent.com/Bhavdeep-Sai/EcoTwin-AI/main/public/screenshots/heatmap.png)
+*   **AI Twin Assistant Chat:** ![AI Chat Drawer](https://raw.githubusercontent.com/Bhavdeep-Sai/EcoTwin-AI/main/public/screenshots/ai_chat.png)
+*   **Future Impact Simulator:** ![Simulator Slider](https://raw.githubusercontent.com/Bhavdeep-Sai/EcoTwin-AI/main/public/screenshots/simulator.png)
+*   **Interactive Analytics Charts:** ![Dashboard Analytics](https://raw.githubusercontent.com/Bhavdeep-Sai/EcoTwin-AI/main/public/screenshots/analytics.png)
+*   **Achievements & Badges Panel:** ![Achievements Badges](https://raw.githubusercontent.com/Bhavdeep-Sai/EcoTwin-AI/main/public/screenshots/achievements.png)
+*   **Weekly Emissions Report:** ![Weekly Progress Report](https://raw.githubusercontent.com/Bhavdeep-Sai/EcoTwin-AI/main/public/screenshots/weekly_report.png)
 
 ### Future Development Roadmap
 - [ ] **Google & GitHub OAuth:** Streamlined social authentication flow.
