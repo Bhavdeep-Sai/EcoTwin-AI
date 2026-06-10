@@ -5,12 +5,12 @@ import { BookOpen, ChevronDown, ChevronUp, Landmark, ShieldQuestion } from 'luci
 import { EmissionFactor } from '@/lib/services/carbonFactors'
 
 interface CalculationInspectorProps {
-  factorKey: string
+
   factorData: EmissionFactor | undefined
   quantityText: string
 }
 
-export function CalculationInspector({ factorKey, factorData, quantityText }: CalculationInspectorProps) {
+export function CalculationInspector({ factorData, quantityText }: CalculationInspectorProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   if (!factorData) return null

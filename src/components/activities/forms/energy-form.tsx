@@ -13,7 +13,12 @@ import { CalculationInspector } from "@/components/ui/calculation-inspector"
 export function EnergyForm() {
   const [source, setSource] = useState("Grid")
   const [zip, setZip] = useState("")
-  const [gridData, setGridData] = useState<any>(null)
+  const [gridData, setGridData] = useState<{
+    subregion_code: string;
+    subregion_name: string;
+    co2e_rate_kg_kwh: number;
+    fuel_mix_pct: Record<string, number>;
+  } | null>(null)
   const [loadingGrid, setLoadingGrid] = useState(false)
   const [kwhUsed, setKwhUsed] = useState("")
 
@@ -35,8 +40,8 @@ export function EnergyForm() {
         toast.success(`EPA eGRID Subregion loaded: ${result.subregion_code}`, {
           description: result.subregion_name
         })
-      } catch (err: any) {
-        toast.error("EPA eGRID Lookup failed", { description: err.message })
+      } catch (err: unknown) {
+        toast.error("EPA eGRID Lookup failed", { description: err instanceof Error ? err.message : "Unknown error" })
         setGridData(null)
       } finally {
         setLoadingGrid(false)
@@ -44,13 +49,6 @@ export function EnergyForm() {
     } else {
       setGridData(null)
     }
-  }
-
-  // Common zip quick-fills for testing
-  const handleZipQuickFill = (zipVal: string) => {
-    setZip(zipVal)
-    const event = { target: { value: zipVal } } as React.ChangeEvent<HTMLInputElement>
-    handleZipChange(event)
   }
 
   // Get active carbon factor (kg CO2e per kWh)
@@ -84,7 +82,7 @@ export function EnergyForm() {
       return
     }
 
-    let details: any = { source, kwh_used: kwhNum }
+    const details: Record<string, unknown> = { source, kwh_used: kwhNum }
     let subregionLabel = "Standard Grid"
 
     if (source === 'Grid') {
@@ -110,8 +108,8 @@ export function EnergyForm() {
       setKwhUsed("")
       setZip("")
       setGridData(null)
-    } catch (err: any) {
-      toast.error("Failed to log electricity activity", { description: err.message })
+    } catch (err: unknown) {
+      toast.error("Failed to log electricity activity", { description: err instanceof Error ? err.message : "Unknown error" })
     }
   }
 
@@ -175,31 +173,6 @@ export function EnergyForm() {
 
       {source === 'Grid' && (
         <div className="flex flex-col gap-4">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[10px] text-muted-foreground font-semibold">ZIP Quick-Fills:</span>
-            <button
-              type="button"
-              onClick={() => handleZipQuickFill("60601")}
-              className="text-[10px] font-bold px-2 py-1 rounded bg-muted hover:bg-muted/80 border border-border text-muted-foreground hover:text-foreground transition-all cursor-pointer"
-            >
-              Chicago (60601 - Coal Heavy)
-            </button>
-            <button
-              type="button"
-              onClick={() => handleZipQuickFill("10001")}
-              className="text-[10px] font-bold px-2 py-1 rounded bg-muted hover:bg-muted/80 border border-border text-muted-foreground hover:text-foreground transition-all cursor-pointer"
-            >
-              New York (10001 - Clean Nuclear/Hydro)
-            </button>
-            <button
-              type="button"
-              onClick={() => handleZipQuickFill("90210")}
-              className="text-[10px] font-bold px-2 py-1 rounded bg-muted hover:bg-muted/80 border border-border text-muted-foreground hover:text-foreground transition-all cursor-pointer"
-            >
-              California (90210 - Solar/Imports)
-            </button>
-          </div>
-
           <div className="flex flex-col gap-2">
             <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">US ZIP Code (Loads EPA eGRID Subregion Factors)</label>
             <div className="relative">
@@ -273,7 +246,6 @@ export function EnergyForm() {
       )}
 
       <CalculationInspector 
-        factorKey={source === 'Solar' ? 'Solar / Clean Sourcing' : gridData ? gridData.subregion_code : 'US Average Grid'}
         factorData={activeFactorData}
         quantityText={`${kwhUsed || '0'} kWh`}
       />

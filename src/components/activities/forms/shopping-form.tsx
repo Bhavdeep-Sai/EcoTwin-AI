@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { toast } from "sonner"
 import { SubmitButton } from "./submit-button"
-import { logActivity } from "@/lib/actions/activities"
+import { useActivityForm } from "./use-activity-form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { SHOPPING_FACTORS } from "@/lib/services/carbonFactors"
@@ -12,13 +12,14 @@ import { CalculationInspector } from "@/components/ui/calculation-inspector"
 export function ShoppingForm() {
   const [category, setCategory] = useState("Clothing")
   const [cost, setCost] = useState("")
+  const { submitActivity } = useActivityForm("shopping")
 
   const activeFactorData = SHOPPING_FACTORS[category]
 
   async function action(formData: FormData) {
     const costNum = Number(formData.get("cost") || cost)
     if (!costNum || costNum <= 0) {
-      toast.error("Please enter a valid cost.")
+      // Basic validation handled
       return
     }
 
@@ -27,15 +28,7 @@ export function ShoppingForm() {
     const title = `₹${costNum} on ${category}`
     const details = { item_category: category, cost: costNum }
 
-    try {
-      await logActivity("shopping", title, Number(impactKg.toFixed(2)), details)
-      toast.success("Activity logged successfully!", {
-        description: `Estimated impact: ${impactKg.toFixed(2)} kg CO₂e`,
-      })
-      setCost("")
-    } catch (err: any) {
-      toast.error("Failed to log activity", { description: err.message })
-    }
+    await submitActivity(title, impactKg, details, () => setCost(""))
   }
 
   return (
@@ -81,7 +74,6 @@ export function ShoppingForm() {
         </div>
       </div>
       <CalculationInspector 
-        factorKey={category}
         factorData={activeFactorData}
         quantityText={`₹${cost || "0"} spent`}
       />

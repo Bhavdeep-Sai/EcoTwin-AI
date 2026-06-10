@@ -11,7 +11,7 @@ export interface EmissionFactor {
 // Transportation Emission Factors (kg CO2e per km)
 export const TRANSPORT_FACTORS: Record<string, EmissionFactor> = {
   "Car (Petrol)": {
-    factor: 0.170,
+    factor: 0.170, // NOTE: DEFRA uses 0.170. The carbonEngine uses US EPA GHG Hub (0.208). Both are scientifically valid depending on regional context.
     unit: "kg CO₂e / km",
     source: "US EPA & UK DEFRA",
     year: 2024,

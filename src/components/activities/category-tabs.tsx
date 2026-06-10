@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Car, Utensils, Zap, ShoppingBag, Trash2 } from "lucide-react"
-import { ActivityCategory } from "@/lib/actions/activities"
+import type { ActivityCategory } from "@/types"
 import { cn } from "@/lib/utils"
 
 interface CategoryTabsProps {

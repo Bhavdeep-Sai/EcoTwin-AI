@@ -37,8 +37,8 @@ export function AqiCard() {
       if (result.aqi <= 50) root.style.setProperty('--dashboard-glow', 'rgba(16, 185, 129, 0.1)')
       else if (result.aqi <= 100) root.style.setProperty('--dashboard-glow', 'rgba(245, 158, 11, 0.08)')
       else root.style.setProperty('--dashboard-glow', 'rgba(239, 68, 68, 0.08)')
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : String(err))
     } finally {
       setLoading(false)
     }
@@ -76,6 +76,7 @@ export function AqiCard() {
   // On mount: check permission state and auto-request if prompt or granted
   useEffect(() => {
     if (!navigator.geolocation) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLocationState('unavailable')
       setLoading(false)
       setError('Geolocation is not supported by your browser.')
@@ -85,13 +86,10 @@ export function AqiCard() {
     if (navigator.permissions) {
       navigator.permissions.query({ name: 'geolocation' }).then((result) => {
         if (result.state === 'granted') {
-          // Already granted — fetch silently
           requestLocation()
         } else if (result.state === 'prompt') {
-          // Will show browser prompt on request
           requestLocation()
         } else {
-          // Denied — show manual button
           setLocationState('denied')
           setLoading(false)
           setError('Location access denied. Allow location in your browser settings, then click Retry.')
@@ -100,14 +98,12 @@ export function AqiCard() {
           if (result.state === 'granted') requestLocation()
         }
       }).catch(() => {
-        // Permissions API not available — just request directly
         requestLocation()
       })
     } else {
       requestLocation()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [requestLocation])
 
   const handleRetry = () => {
     if (coords) {
@@ -190,7 +186,11 @@ export function AqiCard() {
       <div className={`absolute top-0 right-0 -mr-6 -mt-6 w-16 h-16 rounded-full blur-xl opacity-30 ${aqi <= 50 ? 'bg-emerald-500' : aqi <= 100 ? 'bg-amber-500' : 'bg-rose-500'}`}></div>
       <CardHeader className="p-6 pb-2">
         <CardDescription className="text-muted-foreground font-semibold text-xs uppercase tracking-wider font-sans">Live Air Quality</CardDescription>
-        <CardTitle className="text-3xl font-bold text-foreground mt-1 flex items-baseline gap-2">
+        <CardTitle
+          className="text-3xl font-bold text-foreground mt-1 flex items-baseline gap-2"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <span className={aqiColorClass}>{aqi}</span>
           <span className="text-sm font-semibold text-muted-foreground">AQI</span>
         </CardTitle>

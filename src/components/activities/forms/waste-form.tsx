@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { toast } from "sonner"
 import { SubmitButton } from "./submit-button"
-import { logActivity } from "@/lib/actions/activities"
+import { useActivityForm } from "./use-activity-form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
@@ -14,13 +14,14 @@ export function WasteForm() {
   const [type, setType] = useState("Plastic")
   const [isRecycled, setIsRecycled] = useState(false)
   const [weight, setWeight] = useState("")
+  const { submitActivity } = useActivityForm("waste")
 
   const activeFactorData = WASTE_FACTORS[type]
 
   async function action(formData: FormData) {
     const weightNum = Number(formData.get("weight_kg") || weight)
     if (!weightNum || weightNum <= 0) {
-      toast.error("Please enter a valid weight.")
+      // It is a simple validation toast so we can keep it or let useActivityForm handle it if we want. But validation toast is fine here.
       return
     }
 
@@ -30,15 +31,7 @@ export function WasteForm() {
     const title = `${weightNum}kg of ${isRecycled ? 'recycled ' : ''}${type}`
     const details = { waste_type: type, weight_kg: weightNum, recycled: isRecycled }
 
-    try {
-      await logActivity("waste", title, Number(impactKg.toFixed(2)), details)
-      toast.success("Activity logged successfully!", {
-        description: `Estimated impact: ${impactKg.toFixed(2)} kg CO₂e`,
-      })
-      setWeight("")
-    } catch (err: any) {
-      toast.error("Failed to log activity", { description: err.message })
-    }
+    await submitActivity(title, impactKg, details, () => setWeight(""))
   }
 
   return (
@@ -93,7 +86,6 @@ export function WasteForm() {
         </div>
       </div>
       <CalculationInspector 
-        factorKey={type}
         factorData={
           isRecycled && activeFactorData
             ? {

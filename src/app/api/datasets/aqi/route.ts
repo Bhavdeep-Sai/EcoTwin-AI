@@ -17,6 +17,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid latitude or longitude coordinates' }, { status: 400 });
   }
 
+  if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+    return NextResponse.json({ error: 'Coordinates out of valid bounds' }, { status: 400 });
+  }
+
   try {
     const aqiData = await getRealtimeAqi(lat, lon);
     return NextResponse.json(aqiData);

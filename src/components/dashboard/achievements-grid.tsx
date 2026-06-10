@@ -3,8 +3,10 @@
 import React from 'react'
 import { Award, Flame, Leaf, Bus, Trash2, Zap, Lock } from 'lucide-react'
 
+import type { ActivityRecord } from '@/types'
+
 interface AchievementsGridProps {
-  activities: any[]
+  activities: ActivityRecord[]
 }
 
 interface Achievement {
@@ -19,10 +21,10 @@ interface Achievement {
 
 export function AchievementsGrid({ activities }: AchievementsGridProps) {
   // 1. Calculate activity statistics for unlocking conditions
-  const veganCount = activities.filter(act => act.category === 'food' && act.details?.diet_category?.toLowerCase() === 'vegan').length
-  const transitCount = activities.filter(act => act.category === 'transport' && ['train', 'bus', 'electric_vehicle'].includes(act.details?.mode?.toLowerCase())).length
+  const veganCount = activities.filter(act => act.category === 'food' && String(act.details?.diet_category).toLowerCase() === 'vegan').length
+  const transitCount = activities.filter(act => act.category === 'transport' && ['train', 'bus', 'electric_vehicle'].includes(String(act.details?.mode).toLowerCase())).length
   const recycleCount = activities.filter(act => act.category === 'waste' && act.details?.recycled === true).length
-  const renewableGridCount = activities.filter(act => act.category === 'electricity' && act.details?.source?.toLowerCase() === 'renewable').length
+  const renewableGridCount = activities.filter(act => act.category === 'electricity' && String(act.details?.source).toLowerCase() === 'renewable').length
   const totalCount = activities.length
   
   const totalCarbonImpact = activities.reduce((sum, act) => sum + Number(act.carbon_impact_kg), 0)

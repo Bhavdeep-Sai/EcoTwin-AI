@@ -1,11 +1,12 @@
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
+import { useState, useMemo } from "react"
 import {
   PieChart, Pie, Cell, ResponsiveContainer, Tooltip,
   AreaChart, Area, XAxis, YAxis, CartesianGrid
 } from "recharts"
 import { TrendingUp, TrendingDown, ShieldCheck, ExternalLink, Info, Utensils, Zap, Car, ShoppingBag, Trash2, BarChart2 } from "lucide-react"
+import type { ActivityRecord } from "@/types"
 
 // ─── Category Config ──────────────────────────────────────────────────────────
 const CATEGORY_CONFIG: Record<string, { color: string; icon: React.ElementType; label: string }> = {
@@ -35,7 +36,13 @@ function DonutCenterLabel({ total, cx, cy }: { total: number; cx?: number; cy?: 
 }
 
 // ─── Custom Tooltip ───────────────────────────────────────────────────────────
-function CustomTooltip({ active, payload, label }: any) {
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: { value: number; payload: { name: string; color: string; value: number; pct: string } }[];
+  label?: string;
+}
+
+function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
   if (!active || !payload?.length) return null
   return (
     <div style={{
@@ -49,25 +56,22 @@ function CustomTooltip({ active, payload, label }: any) {
       minWidth: 130,
     }}>
       <p style={{ color: 'var(--muted-foreground)', marginBottom: 4, fontWeight: 600 }}>{label}</p>
-      {payload.map((p: any, i: number) => (
-        <p key={i} style={{ color: '#10b981', fontWeight: 700 }}>{p.value.toFixed(2)} kg CO₂e</p>
+      {payload.map((p, i) => (
+        <p key={i} style={{ color: '#10b981', fontWeight: 700 }}>{(p.value as number).toFixed(2)} kg CO₂e</p>
       ))}
     </div>
   )
 }
 
 // ─── Main Component ───────────────────────────────────────────────────────────
-export function DashboardCharts({ activities }: { activities: any[] }) {
-  const [isMounted, setIsMounted] = useState(false)
+export function DashboardCharts({ activities }: { activities: ActivityRecord[] }) {
   const [trendMode, setTrendMode] = useState<'daily' | 'weekly'>('daily')
-
-  useEffect(() => { setIsMounted(true) }, [])
 
   // ── Data derivations ──────────────────────────────────────────────────────
   const { pieData, totalKg, topCategories } = useMemo(() => {
     const categoryMap: Record<string, number> = {}
     for (const act of activities ?? []) {
-      const cat = act.category?.toLowerCase() ?? 'other'
+      const cat = (act.category?.toLowerCase() ?? 'other') as string
       categoryMap[cat] = (categoryMap[cat] || 0) + Number(act.carbon_impact_kg)
     }
     const total = Object.values(categoryMap).reduce((s, v) => s + v, 0)
@@ -127,18 +131,6 @@ export function DashboardCharts({ activities }: { activities: any[] }) {
     return Math.round(((recent - prev) / prev) * 100)
   }, [areaData])
 
-  // ── Loading skeleton ──────────────────────────────────────────────────────
-  if (!isMounted) {
-    return (
-      <div className="w-full p-6 animate-pulse space-y-4">
-        <div className="h-6 bg-muted rounded w-48" />
-        <div className="grid grid-cols-2 gap-4">
-          <div className="h-64 bg-muted rounded-2xl" />
-          <div className="h-64 bg-muted rounded-2xl" />
-        </div>
-      </div>
-    )
-  }
 
   // ── Empty state ───────────────────────────────────────────────────────────
   if (!activities?.length) {

@@ -175,3 +175,106 @@
     display: none;
   }
 }
+
+/* ── GitHub Contribution Heatmap ─────────────────────────────────────────── */
+.heatmap-wrapper {
+  --level-0: #ebedf0;
+  --level-1: #9be9a8;
+  --level-2: #40c463;
+  --level-3: #30a14e;
+  --level-4: #216e39;
+  --cell-size: 10px;
+  --cell-gap: 3px;
+  --month-gap: 12px;
+}
+
+.dark .heatmap-wrapper {
+  --level-0: #161b22;
+  --level-1: #0e4429;
+  --level-2: #006d32;
+  --level-3: #26a641;
+  --level-4: #39d353;
+}
+
+@media (max-width: 1024px) {
+  .heatmap-wrapper {
+    --cell-size: 9px;
+    --cell-gap: 2px;
+    --month-gap: 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  .heatmap-wrapper {
+    --cell-size: 8px;
+    --cell-gap: 2px;
+    --month-gap: 8px;
+  }
+}
+
+.heatmap-layout {
+  display: flex;
+  gap: var(--month-gap);
+  width: max-content;
+}
+
+.month-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.month-grid {
+  display: flex;
+  gap: var(--cell-gap);
+}
+
+.week-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cell-gap);
+}
+
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border-radius: 2px;
+  transition: background-color 0.2s ease;
+}
+
+.cell:hover,
+.cell:focus {
+  transform: scale(1.2);
+  z-index: 20;
+  outline: none;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+}
+
+.cell-level-0 { background-color: var(--level-0); }
+.cell-level-1 { background-color: var(--level-1); }
+.cell-level-2 { background-color: var(--level-2); }
+.cell-level-3 { background-color: var(--level-3); }
+.cell-level-4 { background-color: var(--level-4); }
+
+.cell-placeholder {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.contrib-tooltip {
+  position: absolute;
+  z-index: 50;
+  background-color: var(--popover, #1e293b);
+  border: 1px solid var(--border, #334155);
+  color: var(--popover-foreground, #f8fafc);
+  font-size: 11px;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+  min-width: 155px;
+  transform: translateX(-50%);
+  transition: opacity 0.15s ease-out;
+}

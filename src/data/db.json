@@ -156,6 +156,296 @@
         },
         "duration_minutes": 47
       }
+    },
+    {
+      "id": "75def015-66ff-453a-aafe-f2f88c823049",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "transport",
+      "title": "Daily Commute to Office",
+      "carbon_impact_kg": 3.223035498897133,
+      "activity_date": "2026-06-09",
+      "details": {
+        "mode": "Car (Petrol)",
+        "distance_km": 17.030245188683455
+      }
+    },
+    {
+      "id": "c07d37c1-4e4e-4921-9020-c6e1e4edf11c",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "food",
+      "title": "Chicken Dinner",
+      "carbon_impact_kg": 4.5,
+      "activity_date": "2026-06-09",
+      "details": {
+        "meal_type": "Dinner",
+        "diet_category": "Non-Vegetarian"
+      }
+    },
+    {
+      "id": "3344b416-1b50-4669-bc50-f14cdf790188",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "electricity",
+      "title": "Daily Home Energy",
+      "carbon_impact_kg": 5.6409250037937895,
+      "activity_date": "2026-06-09",
+      "details": {
+        "source": "Grid",
+        "kwh_used": 16.331632201179183
+      }
+    },
+    {
+      "id": "57606cb9-5f89-4029-a680-d1e53dcde4e4",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "transport",
+      "title": "Daily Commute to Office",
+      "carbon_impact_kg": 3.0382662108692298,
+      "activity_date": "2026-06-08",
+      "details": {
+        "mode": "Car (Petrol)",
+        "distance_km": 17.07965071400859
+      }
+    },
+    {
+      "id": "1aaf9908-264d-4ac4-9f71-ace111500304",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "food",
+      "title": "Plant-based Lunch",
+      "carbon_impact_kg": 0.8,
+      "activity_date": "2026-06-08",
+      "details": {
+        "meal_type": "Lunch",
+        "diet_category": "Vegan"
+      }
+    },
+    {
+      "id": "b896c109-ecc9-43fe-b9da-11a83d6ff646",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "electricity",
+      "title": "Daily Home Energy",
+      "carbon_impact_kg": 6.597293851734651,
+      "activity_date": "2026-06-08",
+      "details": {
+        "source": "Grid",
+        "kwh_used": 15.817709324587918
+      }
+    },
+    {
+      "id": "5dc90a29-3686-4243-a58c-ea5cd5de1269",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "transport",
+      "title": "Daily Commute to Office",
+      "carbon_impact_kg": 3.5038107589270004,
+      "activity_date": "2026-06-07",
+      "details": {
+        "mode": "Car (Petrol)",
+        "distance_km": 16.831089383686752
+      }
+    },
+    {
+      "id": "bd3ea5fe-c656-43ed-bd0a-7f939c837035",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "food",
+      "title": "Chicken Dinner",
+      "carbon_impact_kg": 4.5,
+      "activity_date": "2026-06-07",
+      "details": {
+        "meal_type": "Dinner",
+        "diet_category": "Non-Vegetarian"
+      }
+    },
+    {
+      "id": "e4c352a3-5f47-442f-a281-78f312172495",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "electricity",
+      "title": "Daily Home Energy",
+      "carbon_impact_kg": 5.151693319885591,
+      "activity_date": "2026-06-07",
+      "details": {
+        "source": "Grid",
+        "kwh_used": 15.957981774701267
+      }
+    },
+    {
+      "id": "c2f5c985-231a-4b0d-92d3-f368f4e436c8",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "waste",
+      "title": "Recycling Batch",
+      "carbon_impact_kg": 0.5,
+      "activity_date": "2026-06-07",
+      "details": {
+        "waste_type": "Mixed",
+        "weight_kg": 3,
+        "recycled": true
+      }
+    },
+    {
+      "id": "738b76e8-a5af-4e92-9f75-4adb933daa4a",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "transport",
+      "title": "Daily Commute to Office",
+      "carbon_impact_kg": 3.821636894903332,
+      "activity_date": "2026-06-06",
+      "details": {
+        "mode": "Car (Petrol)",
+        "distance_km": 15.70697489917957
+      }
+    },
+    {
+      "id": "901e993b-b5b5-4a63-b017-00ab66880a03",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "food",
+      "title": "Plant-based Lunch",
+      "carbon_impact_kg": 0.8,
+      "activity_date": "2026-06-06",
+      "details": {
+        "meal_type": "Lunch",
+        "diet_category": "Vegan"
+      }
+    },
+    {
+      "id": "27642a28-c0e5-4f4d-9bc8-7a95ecc052e5",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "electricity",
+      "title": "Daily Home Energy",
+      "carbon_impact_kg": 6.092953516493255,
+      "activity_date": "2026-06-06",
+      "details": {
+        "source": "Grid",
+        "kwh_used": 14.022569049967759
+      }
+    },
+    {
+      "id": "29a1ffbb-a0ca-4aa2-834b-f67733f06b9f",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "shopping",
+      "title": "Groceries",
+      "carbon_impact_kg": 8.5,
+      "activity_date": "2026-06-06",
+      "details": {
+        "item_category": "Food & Groceries",
+        "cost": 1500
+      }
+    },
+    {
+      "id": "54ed5220-2511-4962-8f0b-4c3ba109cd24",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "transport",
+      "title": "Daily Commute to Office",
+      "carbon_impact_kg": 3.2290938906514626,
+      "activity_date": "2026-06-05",
+      "details": {
+        "mode": "Car (Petrol)",
+        "distance_km": 18.55227749329778
+      }
+    },
+    {
+      "id": "62dd310a-559d-48a8-a59e-01e0a165adba",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "food",
+      "title": "Chicken Dinner",
+      "carbon_impact_kg": 4.5,
+      "activity_date": "2026-06-05",
+      "details": {
+        "meal_type": "Dinner",
+        "diet_category": "Non-Vegetarian"
+      }
+    },
+    {
+      "id": "33650f3d-9418-4f54-82a6-e1e3bc4be215",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "electricity",
+      "title": "Daily Home Energy",
+      "carbon_impact_kg": 6.636727355474656,
+      "activity_date": "2026-06-05",
+      "details": {
+        "source": "Grid",
+        "kwh_used": 12.29307092395604
+      }
+    },
+    {
+      "id": "4a05d3cf-5808-4cfa-b9da-73e31499ad31",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "transport",
+      "title": "Daily Commute to Office",
+      "carbon_impact_kg": 3.0244522441667527,
+      "activity_date": "2026-06-04",
+      "details": {
+        "mode": "Car (Petrol)",
+        "distance_km": 19.737405562907846
+      }
+    },
+    {
+      "id": "b23bb260-085e-4c8a-9098-ce2f38583e1d",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "food",
+      "title": "Plant-based Lunch",
+      "carbon_impact_kg": 0.8,
+      "activity_date": "2026-06-04",
+      "details": {
+        "meal_type": "Lunch",
+        "diet_category": "Vegan"
+      }
+    },
+    {
+      "id": "de7ef613-e8e3-4f4a-9b88-a9e3b5cb2e1d",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "electricity",
+      "title": "Daily Home Energy",
+      "carbon_impact_kg": 6.48814560980986,
+      "activity_date": "2026-06-04",
+      "details": {
+        "source": "Grid",
+        "kwh_used": 15.969472962863641
+      }
+    },
+    {
+      "id": "a3bef814-7927-4e27-a99d-b3233814838d",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "waste",
+      "title": "Recycling Batch",
+      "carbon_impact_kg": 0.5,
+      "activity_date": "2026-06-04",
+      "details": {
+        "waste_type": "Mixed",
+        "weight_kg": 3,
+        "recycled": true
+      }
+    },
+    {
+      "id": "bd51616b-accd-4974-89b6-b3bb48e2d9b9",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "transport",
+      "title": "Daily Commute to Office",
+      "carbon_impact_kg": 2.5894260066671952,
+      "activity_date": "2026-06-03",
+      "details": {
+        "mode": "Car (Petrol)",
+        "distance_km": 15.625333721941532
+      }
+    },
+    {
+      "id": "bb17cc02-bcc0-4a4a-ac2e-657e87715c98",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "food",
+      "title": "Chicken Dinner",
+      "carbon_impact_kg": 4.5,
+      "activity_date": "2026-06-03",
+      "details": {
+        "meal_type": "Dinner",
+        "diet_category": "Non-Vegetarian"
+      }
+    },
+    {
+      "id": "af22aef1-6880-4407-9927-aed990e7c25d",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "electricity",
+      "title": "Daily Home Energy",
+      "carbon_impact_kg": 6.670699591392454,
+      "activity_date": "2026-06-03",
+      "details": {
+        "source": "Grid",
+        "kwh_used": 13.51038510850148
+      }
     }
   ],
   "ai_insights": [

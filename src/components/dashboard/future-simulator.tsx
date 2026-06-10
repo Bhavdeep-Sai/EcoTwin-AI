@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   AreaChart,
   Area,
@@ -17,11 +17,6 @@ export function FutureSimulator() {
   const [commuteDistance, setCommuteDistance] = useState<number>(30) // km per day
   const [commuteMode, setCommuteMode] = useState<string>('petrol_car') // petrol_car, electric_vehicle, transit
   const [renewablePct, setRenewablePct] = useState<number>(10) // 0% to 100%
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
 
   // Scientific daily rates (in kg CO2e)
   const DIET_RATES = [0.8, 1.2, 2.0, 3.5] // Vegan, Veg, Avg, Meat-Heavy
@@ -201,39 +196,37 @@ export function FutureSimulator() {
         </div>
 
         <div className="w-full h-[280px]">
-          {isMounted && (
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <defs>
-                  <linearGradient id="colorBase" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#ef4444" stopOpacity={0.15}/>
-                    <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
-                  </linearGradient>
-                  <linearGradient id="colorSim" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.25}/>
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
-                  </linearGradient>
-                  <linearGradient id="colorTarget" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.15}/>
-                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.15} stroke="var(--border)" />
-                <XAxis dataKey="year" stroke="var(--muted-foreground)" fontSize={10} tickLine={false} />
-                <YAxis stroke="var(--muted-foreground)" fontSize={10} tickLine={false} />
-                <Tooltip 
-                  contentStyle={{ backgroundColor: 'var(--card)', border: '1px solid var(--border)', borderRadius: '12px', color: 'var(--foreground)' }}
-                  labelStyle={{ fontWeight: 'bold', fontSize: 11, color: 'var(--foreground)' }}
-                  itemStyle={{ fontSize: 11 }}
-                />
-                <Legend wrapperStyle={{ fontSize: 10, paddingTop: 10 }} />
-                
-                <Area type="monotone" dataKey="Baseline" stroke="#ef4444" fillOpacity={1} fill="url(#colorBase)" strokeWidth={2} name="US Average Baseline" />
-                <Area type="monotone" dataKey="Simulated" stroke="#10b981" fillOpacity={1} fill="url(#colorSim)" strokeWidth={2.5} name="Your Simulated Choice" />
-                <Area type="monotone" dataKey="TargetPathway" stroke="#3b82f6" fillOpacity={1} fill="url(#colorTarget)" strokeWidth={2} strokeDasharray="4 4" name="Paris Goal Alignment" />
-              </AreaChart>
-            </ResponsiveContainer>
-          )}
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <defs>
+                <linearGradient id="colorBase" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#ef4444" stopOpacity={0.15}/>
+                  <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
+                </linearGradient>
+                <linearGradient id="colorSim" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.25}/>
+                  <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                </linearGradient>
+                <linearGradient id="colorTarget" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.15}/>
+                  <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.15} stroke="var(--border)" />
+              <XAxis dataKey="year" stroke="var(--muted-foreground)" fontSize={10} tickLine={false} />
+              <YAxis stroke="var(--muted-foreground)" fontSize={10} tickLine={false} />
+              <Tooltip 
+                contentStyle={{ backgroundColor: 'var(--card)', border: '1px solid var(--border)', borderRadius: '12px', color: 'var(--foreground)' }}
+                labelStyle={{ fontWeight: 'bold', fontSize: 11, color: 'var(--foreground)' }}
+                itemStyle={{ fontSize: 11 }}
+              />
+              <Legend wrapperStyle={{ fontSize: 10, paddingTop: 10 }} />
+              
+              <Area type="monotone" dataKey="Baseline" stroke="#ef4444" fillOpacity={1} fill="url(#colorBase)" strokeWidth={2} name="US Average Baseline" />
+              <Area type="monotone" dataKey="Simulated" stroke="#10b981" fillOpacity={1} fill="url(#colorSim)" strokeWidth={2.5} name="Your Simulated Choice" />
+              <Area type="monotone" dataKey="TargetPathway" stroke="#3b82f6" fillOpacity={1} fill="url(#colorTarget)" strokeWidth={2} strokeDasharray="4 4" name="Paris Goal Alignment" />
+            </AreaChart>
+          </ResponsiveContainer>
         </div>
 
         <div className="grid grid-cols-3 gap-3 text-center pt-2">

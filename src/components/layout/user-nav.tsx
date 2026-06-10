@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
+import type { User } from "@supabase/supabase-js"
 import { LogOut } from "lucide-react"
 
 import {
@@ -15,17 +16,28 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
 
 export function UserNav() {
   const router = useRouter()
   const supabase = createClient()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
       setUser(data.user)
     })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_OUT") {
+        setUser(null)
+      } else if (session) {
+        setUser(session.user)
+      }
+    })
+
+    return () => {
+      subscription.unsubscribe()
+    }
   }, [supabase])
 
   if (!user) return null
@@ -39,6 +51,7 @@ export function UserNav() {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
+    setUser(null)
     router.push("/auth")
     router.refresh()
   }

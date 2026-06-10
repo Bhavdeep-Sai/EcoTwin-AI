@@ -15,7 +15,14 @@ export function FoodForm() {
   const [diet, setDiet] = useState("Non-Vegetarian")
   const [calcMode, setCalcMode] = useState<'quick' | 'product'>('quick')
   const [barcode, setBarcode] = useState("")
-  const [productData, setProductData] = useState<any>(null)
+  const [productData, setProductData] = useState<{
+    barcode: string;
+    product_name: string;
+    eco_score: string;
+    carbon_100g_g: number;
+    ingredients_analysis: Record<string, unknown>;
+    packaging_info: { packaging_materials: string[]; recyclable: boolean };
+  } | null>(null)
   const [searching, setSearching] = useState(false)
   const [quantityGrams, setQuantityGrams] = useState(100)
 
@@ -66,18 +73,13 @@ export function FoodForm() {
 
       setProductData(result)
       toast.success("Product details loaded successfully!")
-    } catch (err: any) {
-      toast.error("Food lookup failed", { description: err.message || "Ensure barcode is in OpenFoodFacts database." })
+    } catch (err: unknown) {
+      toast.error("Food lookup failed", { description: err instanceof Error ? err.message : "Ensure barcode is in OpenFoodFacts database." })
     } finally {
       setSearching(false)
     }
   }
 
-  // Quick fill helper
-  const handleQuickFill = (code: string) => {
-    setBarcode(code)
-    searchProduct(code)
-  }
 
   const getEcoScoreColor = (score: string) => {
     switch (score?.toUpperCase()) {
@@ -93,7 +95,7 @@ export function FoodForm() {
   async function action() {
     let impactKg = 0
     let title = ""
-    let details: any = { meal_type: meal }
+    const details: Record<string, unknown> = { meal_type: meal }
 
     if (calcMode === 'quick') {
       impactKg = estimatedImpact
@@ -130,8 +132,8 @@ export function FoodForm() {
         setProductData(null)
         setQuantityGrams(100)
       }
-    } catch (err: any) {
-      toast.error("Failed to log food activity", { description: err.message })
+    } catch (err: unknown) {
+      toast.error("Failed to log food activity", { description: err instanceof Error ? err.message : "Unknown error" })
     }
   }
 
@@ -190,34 +192,7 @@ export function FoodForm() {
             </Select>
           </div>
         ) : (
-          <div className="flex flex-col gap-4 col-span-1 md:col-span-2">
-            {/* Quick-fill Badges for Demo */}
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[10px] text-muted-foreground font-semibold">Demo Quick-Fills:</span>
-              <button
-                type="button"
-                onClick={() => handleQuickFill("3017670149713")}
-                className="text-[10px] font-bold px-2 py-1 rounded bg-muted hover:bg-muted/80 border border-border text-muted-foreground hover:text-foreground transition-all cursor-pointer"
-              >
-                Nutella (High Impact)
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickFill("5449000000996")}
-                className="text-[10px] font-bold px-2 py-1 rounded bg-muted hover:bg-muted/80 border border-border text-muted-foreground hover:text-foreground transition-all cursor-pointer"
-              >
-                Coca-Cola (Recyclable)
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickFill("7622300440612")}
-                className="text-[10px] font-bold px-2 py-1 rounded bg-muted hover:bg-muted/80 border border-border text-muted-foreground hover:text-foreground transition-all cursor-pointer"
-              >
-                Oreo (Medium Impact)
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="flex flex-col gap-4 col-span-1 md:col-span-2">            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="flex flex-col gap-2 md:col-span-2">
                 <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Product Barcode (UPC/EAN)</label>
                 <div className="relative">
@@ -302,14 +277,14 @@ export function FoodForm() {
                   </span>
                 )}
                 
-                {productData.ingredients_analysis?.vegan && (
+                {Boolean(productData.ingredients_analysis?.vegan) && (
                   <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full border border-primary/20 bg-primary/10 text-primary">
                     <Leaf className="h-3 w-3" />
                     Vegan
                   </span>
                 )}
                 
-                {productData.ingredients_analysis?.vegetarian && !productData.ingredients_analysis?.vegan && (
+                {Boolean(productData.ingredients_analysis?.vegetarian) && !Boolean(productData.ingredients_analysis?.vegan) && (
                   <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full border border-primary/20 bg-primary/10 text-primary">
                     <Apple className="h-3 w-3" />
                     Vegetarian
@@ -351,7 +326,6 @@ export function FoodForm() {
       )}
 
       <CalculationInspector 
-        factorKey={calcMode === 'quick' ? diet : productData?.product_name || ""}
         factorData={activeFactorData}
         quantityText={calcMode === 'quick' ? "1 meal" : `${quantityGrams}g`}
       />

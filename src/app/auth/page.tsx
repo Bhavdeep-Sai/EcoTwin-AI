@@ -180,7 +180,7 @@ export default function AuthPage() {
                   <div className="relative">
                     <Lock className="absolute left-3.5 top-3 h-5 w-5 text-muted-foreground" />
                     <Input id="password" name="password" type={showPassword ? "text" : "password"} placeholder="Enter your password" className="pl-11 pr-11 h-12 rounded-xl bg-background" required />
-                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3.5 top-3 text-muted-foreground hover:text-foreground">
+                    <button type="button" aria-label={showPassword ? "Hide password" : "Show password"} onClick={() => setShowPassword(!showPassword)} className="absolute right-3.5 top-3 text-muted-foreground hover:text-foreground">
                       {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                     </button>
                   </div>
@@ -212,7 +212,7 @@ export default function AuthPage() {
                   <div className="relative">
                     <Lock className="absolute left-3.5 top-3 h-5 w-5 text-muted-foreground" />
                     <Input id="register-password" name="password" type={showPassword ? "text" : "password"} placeholder="Create a password" className="pl-11 pr-11 h-12 rounded-xl bg-background" required minLength={6} />
-                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3.5 top-3 text-muted-foreground hover:text-foreground">
+                    <button type="button" aria-label={showPassword ? "Hide password" : "Show password"} onClick={() => setShowPassword(!showPassword)} className="absolute right-3.5 top-3 text-muted-foreground hover:text-foreground">
                       {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                     </button>
                   </div>

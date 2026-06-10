@@ -1,14 +1,14 @@
 "use client"
 
 import React, { useState, useMemo, useRef } from 'react'
+import type { ActivityRecord } from '@/types'
 
 interface ContributionGridProps {
-  activities: any[]
+  activities: ActivityRecord[]
 }
 
 interface DayData {
-  isPlaceholder: boolean;
-  date: Date | null;
+  date: Date;
   dateString: string;
   count: number;
   carbonAvoided: number;
@@ -57,7 +57,7 @@ export function GithubContributionGrid({ activities }: ContributionGridProps) {
     }
 
     let oldest = new Date();
-    activities.forEach((act: any) => {
+    activities.forEach((act) => {
       const actDate = new Date(act.activity_date);
       if (actDate < oldest) {
         oldest = actDate;
@@ -90,7 +90,7 @@ export function GithubContributionGrid({ activities }: ContributionGridProps) {
   // Generate months dynamically from startMonth to current month
   const monthsData = useMemo(() => {
     const today = new Date();
-    const list: { name: string; year: number; monthIndex: number; weeks: DayData[][] }[] = [];
+    const list: { name: string; year: number; monthIndex: number; cells: DayData[] }[] = [];
 
     // Calculate how many months between startMonth and today
     const diffMonths = (today.getFullYear() - startMonth.getFullYear()) * 12 + (today.getMonth() - startMonth.getMonth());
@@ -105,23 +105,7 @@ export function GithubContributionGrid({ activities }: ContributionGridProps) {
       // Get number of days in this month
       const numDays = new Date(year, monthIndex + 1, 0).getDate();
 
-      // Weekday offsets
-      const startWeekday = new Date(year, monthIndex, 1).getDay(); // 0 = Sun, 1 = Mon...
-      const endWeekday = new Date(year, monthIndex, numDays).getDay();
-
       const tempCells: DayData[] = [];
-
-      // 1. Pad start of the month to Sunday (invisible placeholders)
-      for (let pad = 0; pad < startWeekday; pad++) {
-        tempCells.push({
-          isPlaceholder: true,
-          date: null,
-          dateString: '',
-          count: 0,
-          carbonAvoided: 0,
-          sources: []
-        });
-      }
 
       // 2. Add actual days of the month
       for (let day = 1; day <= numDays; day++) {
@@ -130,32 +114,32 @@ export function GithubContributionGrid({ activities }: ContributionGridProps) {
         const dateString = getLocalDateString(cellDate);
 
         // Find activities logged on this date
-        const dayActivities = activities.filter((act: any) => act.activity_date === dateString);
+        const dayActivities = activities.filter((act) => act.activity_date === dateString);
         const count = dayActivities.length;
         let carbonAvoided = 0;
         const sourcesSet = new Set<string>();
 
-        dayActivities.forEach((act: any) => {
+        dayActivities.forEach((act) => {
           let savings = 0;
           if (act.category === 'transport') {
-            const distance = act.details?.distance_km || 10;
+            const distance = Number((act.details as Record<string, unknown>)?.distance_km || 10);
             const baseline = distance * 0.170; // 170g CO2e/km baseline
             savings = Math.max(0, baseline - Number(act.carbon_impact_kg || 0));
           } else if (act.category === 'food') {
             savings = Math.max(0, 3.0 - Number(act.carbon_impact_kg || 0));
           } else if (act.category === 'electricity') {
-            const kwh = act.details?.kwh_used || 10;
+            const kwh = Number((act.details as Record<string, unknown>)?.kwh_used || 10);
             const baseline = kwh * 0.370;
             savings = Math.max(0, baseline - Number(act.carbon_impact_kg || 0));
           } else if (act.category === 'waste') {
-            const weight = act.details?.weight_kg || 1;
-            if (act.details?.recycled) {
+            const weight = Number((act.details as Record<string, unknown>)?.weight_kg || 1);
+            if ((act.details as Record<string, unknown>)?.recycled) {
               savings = weight * 0.5 * 0.9;
             } else {
               savings = 0;
             }
           } else if (act.category === 'shopping') {
-            const cost = act.details?.cost || 100;
+            const cost = Number((act.details as Record<string, unknown>)?.cost || 100);
             savings = Math.max(0, (cost * 0.2) / 1000);
           } else {
             savings = 1.0;
@@ -166,8 +150,6 @@ export function GithubContributionGrid({ activities }: ContributionGridProps) {
         });
 
         tempCells.push({
-          // Always render calendar days of the month
-          isPlaceholder: false,
           date: cellDate,
           dateString,
           count,
@@ -176,62 +158,25 @@ export function GithubContributionGrid({ activities }: ContributionGridProps) {
         });
       }
 
-      // 3. Pad end of the month to Saturday (invisible placeholders)
-      for (let pad = 0; pad < 6 - endWeekday; pad++) {
-        tempCells.push({
-          isPlaceholder: true,
-          date: null,
-          dateString: '',
-          count: 0,
-          carbonAvoided: 0,
-          sources: []
-        });
-      }
-
-      // 4. Chunk cells into weeks of 7 days
-      const weeks: DayData[][] = [];
-      for (let c = 0; c < tempCells.length; c += 7) {
-        weeks.push(tempCells.slice(c, c + 7));
-      }
-
       list.push({
         name,
         year,
         monthIndex,
-        weeks
+        cells: tempCells
       });
     }
 
     return list;
   }, [activities, startMonth]);
 
-  // Pre-render Validation checks
-  const validationError = useMemo(() => {
-    for (let m = 0; m < monthsData.length; m++) {
-      const month = monthsData[m];
-      for (let w = 0; w < month.weeks.length; w++) {
-        if (month.weeks[w].length !== 7) {
-          return `Validation failed: Month ${month.name} Week ${w} does not have exactly 7 rows.`;
-        }
-      }
-    }
-    return null;
-  }, [monthsData]);
-
-  if (validationError) {
-    throw new Error(validationError);
-  }
-
   // Determine thresholds dynamically from actual user counts
   const maxCount = useMemo(() => {
     let max = 0;
     monthsData.forEach(month => {
-      month.weeks.forEach(week => {
-        week.forEach(cell => {
-          if (!cell.isPlaceholder && cell.count > max) {
-            max = cell.count;
-          }
-        });
+      month.cells.forEach(cell => {
+        if (cell.count > max) {
+          max = cell.count;
+        }
       });
     });
     return max;
@@ -382,13 +327,9 @@ export function GithubContributionGrid({ activities }: ContributionGridProps) {
                 }
 
                 .month-grid {
-                  display: flex;
-                  gap: var(--cell-gap);
-                }
-
-                .week-column {
-                  display: flex;
-                  flex-direction: column;
+                  display: grid;
+                  grid-template-rows: repeat(7, var(--cell-size));
+                  grid-auto-flow: column;
                   gap: var(--cell-gap);
                 }
 
@@ -411,13 +352,6 @@ export function GithubContributionGrid({ activities }: ContributionGridProps) {
                 .cell-level-2 { background-color: var(--level-2); }
                 .cell-level-3 { background-color: var(--level-3); }
                 .cell-level-4 { background-color: var(--level-4); }
-
-                .cell-placeholder {
-                  width: var(--cell-size);
-                  height: var(--cell-size);
-                  visibility: hidden;
-                  pointer-events: none;
-                }
 
                 .contrib-tooltip {
                   position: absolute;
@@ -446,26 +380,19 @@ export function GithubContributionGrid({ activities }: ContributionGridProps) {
                   <div key={`${month.name}-${month.year}`} className="month-block">
                     {/* Month mini-grid */}
                     <div className="month-grid">
-                      {month.weeks.map((week, wIdx) => (
-                        <div key={wIdx} className="week-column">
-                          {week.map((cell, cIdx) => (
-                            cell.isPlaceholder ? (
-                              <div key={`placeholder-${cIdx}`} className="cell-placeholder" />
-                            ) : (
-                              <div
-                                key={cell.dateString}
-                                role="gridcell"
-                                tabIndex={0}
-                                aria-label={`${cell.dateString}: ${cell.count} activities, Saved ${cell.carbonAvoided} kg CO₂e`}
-                                className={`cell cell-level-${getLevel(cell.count)}`}
-                                onMouseEnter={(e) => handleShowTooltip(cell, e.currentTarget)}
-                                onMouseLeave={handleHideTooltip}
-                                onFocus={(e) => handleShowTooltip(cell, e.currentTarget)}
-                                onBlur={handleHideTooltip}
-                              />
-                            )
-                          ))}
-                        </div>
+                      {month.cells.map((cell) => (
+                        <div
+                          key={cell.dateString}
+                          role="gridcell"
+                          tabIndex={0}
+                          aria-label={`${cell.dateString}: ${cell.count} activities, Saved ${cell.carbonAvoided} kg CO₂e`}
+                          className={`cell cell-level-${getLevel(cell.count)}`}
+                          style={{ gridRow: cell.date.getDay() + 1 }}
+                          onMouseEnter={(e) => handleShowTooltip(cell, e.currentTarget)}
+                          onMouseLeave={handleHideTooltip}
+                          onFocus={(e) => handleShowTooltip(cell, e.currentTarget)}
+                          onBlur={handleHideTooltip}
+                        />
                       ))}
                     </div>
                     {/* Month Label Centered below its grid */}

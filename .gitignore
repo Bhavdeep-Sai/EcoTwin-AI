@@ -42,3 +42,8 @@ next-env.d.ts
 
 # Runtime data - never commit user data to source control
 src/data/db.json
+src/data/environmental_cache.json
+
+# Credentials (never commit)
+run-schema.js
+run-extensions.js

@@ -38,7 +38,7 @@ export async function fetchFoodProduct(barcode: string): Promise<FoodProductDeta
     return {
       barcode: cached.barcode,
       product_name: cached.product_name,
-      eco_score: cached.eco_score as any,
+      eco_score: cached.eco_score as 'A' | 'B' | 'C' | 'D' | 'E' | 'Unknown',
       carbon_100g_g: Number(cached.carbon_100g_g),
       ingredients_analysis: cached.ingredients_analysis || {},
       packaging_info: cached.packaging_info || {}

@@ -1,7 +1,4 @@
 import { createClient } from '../supabase/server';
-import { readLocalCache, writeLocalCache } from '../db/environmentalCache';
-
-
 
 // Scientific eGRID Subregion Factors (2024 Release)
 // Values in lbs CO2e per MWh and converted to kg CO2e per kWh
@@ -120,7 +117,7 @@ export async function getEpaGridFactorsByZip(zip: string): Promise<EgridFactor> 
     if (!zipErr && zipMap) {
       const { data: factor, error: factErr } = await supabase
         .from('epa_egrid_factors')
-        .select('*')
+        .select('subregion_code, subregion_name, co2_rate_lbs_mwh, ch4_rate_lbs_mwh, n2o_rate_lbs_mwh, co2e_rate_lbs_mwh, fuel_mix_pct')
         .eq('subregion_code', zipMap.subregion_code)
         .single();
       
@@ -158,17 +155,7 @@ export async function getRealtimeAqi(lat: number, lon: number): Promise<{ aqi: n
   const roundLon = Number(lon.toFixed(2));
   const cacheKey = `${roundLat},${roundLon}`;
 
-  // Check local file cache for AQI (1 hour TTL)
-  try {
-    const cache = await readLocalCache();
-    const cachedEntry = cache.cached_aqi && cache.cached_aqi[cacheKey];
-    if (cachedEntry) {
-      const ageHours = (new Date().getTime() - new Date(cachedEntry.fetched_at).getTime()) / (1000 * 60 * 60);
-      if (ageHours < 1.0) {
-        return cachedEntry.data;
-      }
-    }
-  } catch {}
+  // AQI caching removed; fetching fresh data.
 
   // ── PRIMARY: Open-Meteo Air Quality API (free, global, no API key needed) ──
   // Returns European AQI (0-500 scale) and PM2.5 / PM10 concentrations.
@@ -196,12 +183,11 @@ export async function getRealtimeAqi(lat: number, lon: number): Promise<{ aqi: n
           pollutant: pm25 > 0 ? 'PM2.5' : 'PM10',
           reporting_area: `${roundLat}°N, ${Math.abs(roundLon)}°${roundLon >= 0 ? 'E' : 'W'} (Open-Meteo)`
         };
-        await cacheAqiLocal(cacheKey, result);
         return result;
       }
     }
-  } catch (err: any) {
-    console.warn('Open-Meteo AQI fetch failed:', err.message);
+  } catch (err: unknown) {
+    console.warn('Open-Meteo AQI fetch failed:', err instanceof Error ? err.message : String(err));
   }
 
   // ── SECONDARY: EPA AirNow (US-only, requires AIRNOW_API_KEY) ──
@@ -224,28 +210,13 @@ export async function getRealtimeAqi(lat: number, lon: number): Promise<{ aqi: n
             pollutant: maxObs.ParameterName,
             reporting_area: maxObs.ReportingArea
           };
-          await cacheAqiLocal(cacheKey, result);
           return result;
         }
       }
-    } catch (error: any) {
-      console.warn('EPA AirNow API query failed:', error.message);
+    } catch (error: unknown) {
+      console.warn('EPA AirNow API query failed:', error instanceof Error ? error.message : String(error));
     }
   }
 
   throw new Error("Air quality data is currently unavailable. Please check your coordinates or connection.");
-}
-
-async function cacheAqiLocal(key: string, data: any) {
-  try {
-    const cache = await readLocalCache();
-    if (!cache.cached_aqi) cache.cached_aqi = {};
-    cache.cached_aqi[key] = {
-      data,
-      fetched_at: new Date().toISOString()
-    };
-    await writeLocalCache(cache);
-  } catch (err) {
-    console.warn("Failed to write AQI to local cache file:", err);
-  }
 }

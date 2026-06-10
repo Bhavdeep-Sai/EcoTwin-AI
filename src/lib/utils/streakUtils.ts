@@ -2,11 +2,11 @@
  * Calculates the number of consecutive days the user has logged at least one activity,
  * counting backward from today. Returns 0 if no activity was logged today or yesterday.
  */
-export function calculateStreak(activities: any[]): number {
+export function calculateStreak(activities: { activity_date: string }[]): number {
   if (!activities || activities.length === 0) return 0
 
   // Collect unique logged dates (stored as YYYY-MM-DD local time strings)
-  const loggedDates = new Set(activities.map((a: any) => a.activity_date))
+  const loggedDates = new Set(activities.map((a: { activity_date: string }) => a.activity_date))
 
   // Helper: get local YYYY-MM-DD string for a Date offset by N days from now
   const localDateStr = (daysOffset: number): string => {

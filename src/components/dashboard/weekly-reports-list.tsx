@@ -3,8 +3,10 @@
 import React from 'react'
 import { TrendingDown, TrendingUp, Calendar, BookOpen } from 'lucide-react'
 
+import type { ActivityRecord } from '@/types'
+
 interface WeeklyReportsProps {
-  activities: any[]
+  activities: ActivityRecord[]
 }
 
 interface WeeklyReport {
@@ -44,7 +46,7 @@ export function WeeklyReportsList({ activities }: WeeklyReportsProps) {
 
   const weeksMap: Record<string, {
     weekStart: Date
-    activities: any[]
+    activities: ActivityRecord[]
   }> = {}
 
   activities.forEach(act => {

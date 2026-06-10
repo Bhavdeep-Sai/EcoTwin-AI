@@ -4,7 +4,7 @@ import { useState } from "react"
 import { MapPin, Navigation, Loader2 } from "lucide-react"
 import { toast } from "sonner"
 import { SubmitButton } from "./submit-button"
-import { logActivity } from "@/lib/actions/activities"
+import { useActivityForm } from "./use-activity-form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { TRANSPORT_FACTORS } from "@/lib/services/carbonFactors"
@@ -15,7 +15,13 @@ export function TransportForm() {
   const [calcMode, setCalcMode] = useState<'quick' | 'route'>('quick')
   const [origin, setOrigin] = useState("")
   const [destination, setDestination] = useState("")
-  const [routeData, setRouteData] = useState<any>(null)
+  const [routeData, setRouteData] = useState<{
+    distance_km: number;
+    duration_seconds: number;
+    start: { display_name: string; latitude: number; longitude: number };
+    end: { display_name: string; latitude: number; longitude: number };
+  } | null>(null)
+  const { submitActivity } = useActivityForm("transport")
   const [calculating, setCalculating] = useState(false)
 
   const activeFactorData = TRANSPORT_FACTORS[mode]
@@ -52,8 +58,8 @@ export function TransportForm() {
       toast.success("Route calculated successfully!", {
         description: `Distance: ${result.distance_km.toFixed(2)} km`,
       })
-    } catch (err: any) {
-      toast.error("Route calculation failed", { description: err.message || "Ensure addresses are valid." })
+    } catch (err: unknown) {
+      toast.error("Route calculation failed", { description: err instanceof Error ? err.message : "Ensure addresses are valid." })
     } finally {
       setCalculating(false)
     }
@@ -61,7 +67,7 @@ export function TransportForm() {
 
   async function action(formData: FormData) {
     let distance = 0
-    let details: any = { mode }
+    const details: Record<string, unknown> = { mode }
 
     if (calcMode === 'quick') {
       distance = Number(formData.get("distance_km"))
@@ -89,19 +95,13 @@ export function TransportForm() {
       ? `${distance}km via ${mode}`
       : `${origin.split(',')[0]} to ${destination.split(',')[0]} via ${mode}`
 
-    try {
-      await logActivity("transport", title, Number(impactKg.toFixed(2)), details)
-      toast.success("Transportation logged successfully!", {
-        description: `Estimated impact: ${impactKg.toFixed(2)} kg CO₂e`,
-      })
+    await submitActivity(title, impactKg, details, () => {
       if (calcMode === 'route') {
         setOrigin("")
         setDestination("")
         setRouteData(null)
       }
-    } catch (err: any) {
-      toast.error("Failed to log activity", { description: err.message })
-    }
+    })
   }
 
   return (
@@ -256,7 +256,6 @@ export function TransportForm() {
       )}
 
       <CalculationInspector 
-        factorKey={mode}
         factorData={activeFactorData}
         quantityText={`${calcMode === 'quick' ? 'Distance' : 'Route Distance'} (${calcMode === 'quick' ? 'user input' : 'calculated route'})`}
       />

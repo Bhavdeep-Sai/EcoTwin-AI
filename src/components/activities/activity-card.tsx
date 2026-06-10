@@ -9,7 +9,7 @@ import { FoodForm } from "./forms/food-form"
 import { EnergyForm } from "./forms/energy-form"
 import { ShoppingForm } from "./forms/shopping-form"
 import { WasteForm } from "./forms/waste-form"
-import { ActivityCategory } from "@/lib/actions/activities"
+import type { ActivityCategory } from "@/types"
 
 export function ActivityCard() {
   const [activeTab, setActiveTab] = useState<ActivityCategory>("transport")

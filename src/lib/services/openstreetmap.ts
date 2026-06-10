@@ -73,9 +73,9 @@ export async function geocodeAddress(address: string): Promise<{ latitude: numbe
     };
     await setCachedGeocode(cleanAddress, result);
     return result;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Nominatim geocoding failed:", error);
-    throw new Error(error.message || "Geocoding service temporarily unavailable. Check your internet connection.");
+    throw new Error(error instanceof Error && error.message ? error.message : "Geocoding service temporarily unavailable. Check your internet connection.");
   }
 }
 
