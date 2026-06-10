@@ -1,0 +1,139 @@
+{
+  "activities": [
+    {
+      "id": "f810dcbf-d916-457e-b7b2-7196724e5d0e",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "food",
+      "title": "Vegan Breakfast",
+      "carbon_impact_kg": 1,
+      "activity_date": "2026-06-10",
+      "details": {
+        "meal_type": "Breakfast",
+        "diet_category": "Vegan"
+      }
+    },
+    {
+      "id": "2811c39d-2660-4b31-b31b-e4ebb449602f",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "transport",
+      "title": "10km via Bike",
+      "carbon_impact_kg": 2.5,
+      "activity_date": "2026-06-10",
+      "details": {
+        "mode": "Bike",
+        "distance_km": 10
+      }
+    },
+    {
+      "id": "7dabe75e-8db2-46fa-aa9e-d063a2071b02",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "waste",
+      "title": "2kg of Organic",
+      "carbon_impact_kg": 1,
+      "activity_date": "2026-06-10",
+      "details": {
+        "waste_type": "Organic",
+        "weight_kg": 2,
+        "recycled": false
+      }
+    },
+    {
+      "id": "460578b1-7a1b-43cc-a7b9-2792594b763d",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "electricity",
+      "title": "10 kWh from Grid",
+      "carbon_impact_kg": 4,
+      "activity_date": "2026-06-10",
+      "details": {
+        "source": "Grid",
+        "kwh_used": 10
+      }
+    },
+    {
+      "id": "5ffd2458-16ad-4dfa-84cd-68d452d351b5",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "shopping",
+      "title": "₹500 on Clothing",
+      "carbon_impact_kg": 250,
+      "activity_date": "2026-06-10",
+      "details": {
+        "item_category": "Clothing",
+        "cost": 500
+      }
+    },
+    {
+      "id": "55d76ad9-686b-4eca-980a-5594303b2313",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "food",
+      "title": "Meat-heavy Lunch",
+      "carbon_impact_kg": 5,
+      "activity_date": "2026-06-10",
+      "details": {
+        "meal_type": "Lunch",
+        "diet_category": "Meat-heavy"
+      }
+    },
+    {
+      "id": "150f304e-06e2-41cb-bf5a-2a0eb9393ee9",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "waste",
+      "title": "5kg of Paper",
+      "carbon_impact_kg": 5,
+      "activity_date": "2026-06-10",
+      "details": {
+        "waste_type": "Paper",
+        "weight_kg": 5,
+        "recycled": false
+      }
+    },
+    {
+      "id": "6b66eb61-6823-4a1f-a82d-9310595b9167",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "category": "shopping",
+      "title": "₹200 on Clothing",
+      "carbon_impact_kg": 1.2,
+      "activity_date": "2026-06-10",
+      "details": {
+        "item_category": "Clothing",
+        "cost": 200
+      }
+    }
+  ],
+  "ai_insights": [
+    {
+      "id": "39c26b91-8e8f-45ad-b169-124b6b0f339a",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "activity_id": "460578b1-7a1b-43cc-a7b9-2792594b763d",
+      "content": "\"Great job on reducing your carbon footprint with that vegan breakfast and bike ride, EcoStar! Next time, consider offsetting your electricity usage by investing in renewable energy credits, which can offset up to 4kg of CO2 for just $1.\"",
+      "created_at": "2026-06-10T05:34:09.870Z"
+    },
+    {
+      "id": "3054ddab-9e39-4ab3-a2a2-51eafa512cbf",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "activity_id": "5ffd2458-16ad-4dfa-84cd-68d452d351b5",
+      "content": "\"Hey there, EcoTwin!  You had a big shopping spike with that ₹500 on Clothing, which added up to 250kg of CO2.  Next time, consider buying second-hand or sustainable clothing options to significantly reduce your carbon footprint!\"",
+      "created_at": "2026-06-10T05:34:16.543Z"
+    },
+    {
+      "id": "eb346e5c-ba80-49f1-b605-c49485e9c156",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "activity_id": "55d76ad9-686b-4eca-980a-5594303b2313",
+      "content": "\"Great job on your vegan breakfast and bike ride, EcoTwin! Next time, swap the meat-heavy lunch for a plant-based alternative to save an extra 3.75kg of CO2.\"",
+      "created_at": "2026-06-10T05:35:16.541Z"
+    },
+    {
+      "id": "8eaf8a8c-c579-45b1-8288-e6b08c98ee8d",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "activity_id": "150f304e-06e2-41cb-bf5a-2a0eb9393ee9",
+      "content": "\"Hey there, you're doing fabulously for a week so far, especially with that delicious vegan breakfast and eco-friendly bike ride! To reduce your paper waste, try switching to digital receipts and bills from now on, and recycle as much as possible.\"",
+      "created_at": "2026-06-10T05:35:39.338Z"
+    },
+    {
+      "id": "d34176c6-18b6-474d-a8a2-e4a22383df1c",
+      "user_id": "13f797d3-a7dc-4c10-b9af-8aeb3cb4f946",
+      "activity_id": "6b66eb61-6823-4a1f-a82d-9310595b9167",
+      "content": "\"Looks like shopping for clothing is a big contributor to your carbon footprint - try buying second-hand clothing items next time to reduce your impact by 80%!\"",
+      "created_at": "2026-06-10T05:38:13.181Z"
+    }
+  ]
+}

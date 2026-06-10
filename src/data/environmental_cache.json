@@ -1,0 +1,468 @@
+{
+  "ipcc_emission_factors": [
+    {
+      "ipcc_code": "1.A.1.a",
+      "sector": "Energy",
+      "source_category": "Electricity Generation (Coal)",
+      "fuel_type": "Coal",
+      "gas_type": "CO2",
+      "value": 0.95,
+      "unit": "kg/kWh",
+      "region_or_country": "Global",
+      "description": "Default IPCC emission factor for coal-fired electricity generation",
+      "reporting_year": 2024
+    },
+    {
+      "ipcc_code": "1.A.1.a",
+      "sector": "Energy",
+      "source_category": "Electricity Generation (Natural Gas)",
+      "fuel_type": "Gas",
+      "gas_type": "CO2",
+      "value": 0.4,
+      "unit": "kg/kWh",
+      "region_or_country": "Global",
+      "description": "Default IPCC emission factor for gas-fired electricity generation",
+      "reporting_year": 2024
+    },
+    {
+      "ipcc_code": "1.A.1.a",
+      "sector": "Energy",
+      "source_category": "Electricity Generation (Solar PV)",
+      "fuel_type": "Solar",
+      "gas_type": "CO2",
+      "value": 0.04,
+      "unit": "kg/kWh",
+      "region_or_country": "Global",
+      "description": "Lifecycle emissions factor for Solar PV",
+      "reporting_year": 2024
+    },
+    {
+      "ipcc_code": "1.A.1.a",
+      "sector": "Energy",
+      "source_category": "Electricity Generation (Wind)",
+      "fuel_type": "Wind",
+      "gas_type": "CO2",
+      "value": 0.011,
+      "unit": "kg/kWh",
+      "region_or_country": "Global",
+      "description": "Lifecycle emissions factor for Wind turbines",
+      "reporting_year": 2024
+    },
+    {
+      "ipcc_code": "5.A.1",
+      "sector": "Waste",
+      "source_category": "Solid Waste Disposal (Landfill)",
+      "fuel_type": null,
+      "gas_type": "CH4",
+      "value": 0.52,
+      "unit": "kg/kg",
+      "region_or_country": "Global",
+      "description": "Emissions factor for mixed solid waste sent to landfill",
+      "reporting_year": 2024
+    },
+    {
+      "ipcc_code": "5.C.1",
+      "sector": "Waste",
+      "source_category": "Incineration of Waste",
+      "fuel_type": null,
+      "gas_type": "CO2",
+      "value": 0.43,
+      "unit": "kg/kg",
+      "region_or_country": "Global",
+      "description": "Emissions factor for open incineration of municipal waste",
+      "reporting_year": 2024
+    },
+    {
+      "ipcc_code": "3.A.1",
+      "sector": "Agriculture",
+      "source_category": "Enteric Fermentation (Beef Cattle)",
+      "fuel_type": null,
+      "gas_type": "CH4",
+      "value": 99.48,
+      "unit": "kg/kg",
+      "region_or_country": "Global",
+      "description": "Enteric methane emissions from beef production",
+      "reporting_year": 2024
+    }
+  ],
+  "defra_conversion_factors": [
+    {
+      "category": "Passenger vehicles",
+      "activity_type": "petrol_car",
+      "unit": "km",
+      "co2e_factor": 0.17,
+      "reporting_year": 2024,
+      "notes": "Average petrol car emissions (UK DEFRA 2024)"
+    },
+    {
+      "category": "Passenger vehicles",
+      "activity_type": "diesel_car",
+      "unit": "km",
+      "co2e_factor": 0.165,
+      "reporting_year": 2024,
+      "notes": "Average diesel car emissions (UK DEFRA 2024)"
+    },
+    {
+      "category": "Passenger vehicles",
+      "activity_type": "electric_vehicle",
+      "unit": "km",
+      "co2e_factor": 0.045,
+      "reporting_year": 2024,
+      "notes": "UK grid-average lifecycle factor for EVs"
+    },
+    {
+      "category": "Passenger vehicles",
+      "activity_type": "bus",
+      "unit": "km",
+      "co2e_factor": 0.078,
+      "reporting_year": 2024,
+      "notes": "Average bus passenger-km factor"
+    },
+    {
+      "category": "Passenger vehicles",
+      "activity_type": "train",
+      "unit": "km",
+      "co2e_factor": 0.035,
+      "reporting_year": 2024,
+      "notes": "National rail passenger-km factor"
+    },
+    {
+      "category": "Electricity",
+      "activity_type": "grid_electricity",
+      "unit": "kWh",
+      "co2e_factor": 0.207,
+      "reporting_year": 2024,
+      "notes": "UK Electricity grid emissions factor"
+    },
+    {
+      "category": "Water",
+      "activity_type": "water_supply",
+      "unit": "m3",
+      "co2e_factor": 0.149,
+      "reporting_year": 2024,
+      "notes": "Carbon intensity of UK public water supply"
+    },
+    {
+      "category": "Water",
+      "activity_type": "water_treatment",
+      "unit": "m3",
+      "co2e_factor": 0.272,
+      "reporting_year": 2024,
+      "notes": "Carbon intensity of UK public wastewater treatment"
+    },
+    {
+      "category": "Waste",
+      "activity_type": "landfill_waste",
+      "unit": "kg",
+      "co2e_factor": 0.437,
+      "reporting_year": 2024,
+      "notes": "UK standard mixed municipal waste to landfill"
+    },
+    {
+      "category": "Waste",
+      "activity_type": "recycled_waste",
+      "unit": "kg",
+      "co2e_factor": -0.012,
+      "reporting_year": 2024,
+      "notes": "Avoided emissions from closed-loop recycling"
+    }
+  ],
+  "epa_egrid_factors": {
+    "NYUP": {
+      "subregion_code": "NYUP",
+      "subregion_name": "NYUP (Upstate New York - Hydro/Nuclear Rich)",
+      "co2_rate_lbs_mwh": 242.1,
+      "ch4_rate_lbs_mwh": 0.015,
+      "n2o_rate_lbs_mwh": 0.002,
+      "co2e_rate_lbs_mwh": 243.2,
+      "fuel_mix_pct": {
+        "hydro": 0.35,
+        "nuclear": 0.38,
+        "gas": 0.22,
+        "wind": 0.04,
+        "other": 0.01
+      },
+      "reporting_year": 2024
+    },
+    "CAMX": {
+      "subregion_code": "CAMX",
+      "subregion_name": "CAMX (California - Solar/Gas/Imports)",
+      "co2_rate_lbs_mwh": 450.4,
+      "ch4_rate_lbs_mwh": 0.028,
+      "n2o_rate_lbs_mwh": 0.004,
+      "co2e_rate_lbs_mwh": 452.1,
+      "fuel_mix_pct": {
+        "gas": 0.43,
+        "solar": 0.19,
+        "hydro": 0.11,
+        "geothermal": 0.06,
+        "wind": 0.07,
+        "nuclear": 0.08,
+        "other": 0.06
+      },
+      "reporting_year": 2024
+    },
+    "NWPP": {
+      "subregion_code": "NWPP",
+      "subregion_name": "NWPP (Northwest Power Pool - Hydro Rich)",
+      "co2_rate_lbs_mwh": 588.6,
+      "ch4_rate_lbs_mwh": 0.041,
+      "n2o_rate_lbs_mwh": 0.006,
+      "co2e_rate_lbs_mwh": 591.2,
+      "fuel_mix_pct": {
+        "hydro": 0.48,
+        "gas": 0.25,
+        "coal": 0.14,
+        "wind": 0.08,
+        "other": 0.05
+      },
+      "reporting_year": 2024
+    },
+    "ERCT": {
+      "subregion_code": "ERCT",
+      "subregion_name": "ERCT (ERCOT Texas - Wind/Gas/Coal)",
+      "co2_rate_lbs_mwh": 792.8,
+      "ch4_rate_lbs_mwh": 0.052,
+      "n2o_rate_lbs_mwh": 0.007,
+      "co2e_rate_lbs_mwh": 796.4,
+      "fuel_mix_pct": {
+        "gas": 0.46,
+        "wind": 0.22,
+        "coal": 0.18,
+        "solar": 0.05,
+        "nuclear": 0.08,
+        "other": 0.01
+      },
+      "reporting_year": 2024
+    },
+    "RFCE": {
+      "subregion_code": "RFCE",
+      "subregion_name": "RFCE (RFC East - Mid-Atlantic Gas/Nuclear)",
+      "co2_rate_lbs_mwh": 640.2,
+      "ch4_rate_lbs_mwh": 0.042,
+      "n2o_rate_lbs_mwh": 0.006,
+      "co2e_rate_lbs_mwh": 643.1,
+      "fuel_mix_pct": {
+        "nuclear": 0.42,
+        "gas": 0.38,
+        "coal": 0.15,
+        "wind": 0.03,
+        "other": 0.02
+      },
+      "reporting_year": 2024
+    },
+    "SRMW": {
+      "subregion_code": "SRMW",
+      "subregion_name": "SRMW (SERC Midwest - Coal Heavy)",
+      "co2_rate_lbs_mwh": 1390.5,
+      "ch4_rate_lbs_mwh": 0.091,
+      "n2o_rate_lbs_mwh": 0.013,
+      "co2e_rate_lbs_mwh": 1396.2,
+      "fuel_mix_pct": {
+        "coal": 0.52,
+        "gas": 0.32,
+        "nuclear": 0.1,
+        "wind": 0.04,
+        "other": 0.02
+      },
+      "reporting_year": 2024
+    },
+    "US_AVERAGE": {
+      "subregion_code": "US_AVERAGE",
+      "subregion_name": "US National Grid Average",
+      "co2_rate_lbs_mwh": 812.3,
+      "ch4_rate_lbs_mwh": 0.055,
+      "n2o_rate_lbs_mwh": 0.008,
+      "co2e_rate_lbs_mwh": 816.1,
+      "fuel_mix_pct": {
+        "gas": 0.39,
+        "coal": 0.19,
+        "nuclear": 0.19,
+        "wind": 0.1,
+        "hydro": 0.06,
+        "solar": 0.04,
+        "other": 0.03
+      },
+      "reporting_year": 2024
+    }
+  },
+  "epa_zip_to_egrid": {
+    "10001": {
+      "zip_code": "10001",
+      "subregion_code": "NYUP",
+      "state": "NY"
+    },
+    "60601": {
+      "zip_code": "60601",
+      "subregion_code": "SRMW",
+      "state": "IL"
+    },
+    "75001": {
+      "zip_code": "75001",
+      "subregion_code": "ERCT",
+      "state": "TX"
+    },
+    "90210": {
+      "zip_code": "90210",
+      "subregion_code": "CAMX",
+      "state": "CA"
+    },
+    "98101": {
+      "zip_code": "98101",
+      "subregion_code": "NWPP",
+      "state": "WA"
+    },
+    "07001": {
+      "zip_code": "07001",
+      "subregion_code": "RFCE",
+      "state": "NJ"
+    }
+  },
+  "worldbank_country_indicators": {
+    "USA:EG.USE.PCAP.KG.OE": {
+      "country_code": "USA",
+      "indicator_code": "EG.USE.PCAP.KG.OE",
+      "reporting_year": 2024,
+      "value": 6800
+    },
+    "GBR:EG.USE.PCAP.KG.OE": {
+      "country_code": "GBR",
+      "indicator_code": "EG.USE.PCAP.KG.OE",
+      "reporting_year": 2024,
+      "value": 2800
+    },
+    "DEU:EG.USE.PCAP.KG.OE": {
+      "country_code": "DEU",
+      "indicator_code": "EG.USE.PCAP.KG.OE",
+      "reporting_year": 2024,
+      "value": 3500
+    },
+    "IND:EG.USE.PCAP.KG.OE": {
+      "country_code": "IND",
+      "indicator_code": "EG.USE.PCAP.KG.OE",
+      "reporting_year": 2024,
+      "value": 650
+    },
+    "CHN:EG.USE.PCAP.KG.OE": {
+      "country_code": "CHN",
+      "indicator_code": "EG.USE.PCAP.KG.OE",
+      "reporting_year": 2024,
+      "value": 2200
+    },
+    "USA:EN.ATM.CO2E.PC": {
+      "country_code": "USA",
+      "indicator_code": "EN.ATM.CO2E.PC",
+      "reporting_year": 2024,
+      "value": 14.5
+    },
+    "GBR:EN.ATM.CO2E.PC": {
+      "country_code": "GBR",
+      "indicator_code": "EN.ATM.CO2E.PC",
+      "reporting_year": 2024,
+      "value": 4.6
+    },
+    "DEU:EN.ATM.CO2E.PC": {
+      "country_code": "DEU",
+      "indicator_code": "EN.ATM.CO2E.PC",
+      "reporting_year": 2024,
+      "value": 7.7
+    },
+    "IND:EN.ATM.CO2E.PC": {
+      "country_code": "IND",
+      "indicator_code": "EN.ATM.CO2E.PC",
+      "reporting_year": 2024,
+      "value": 1.8
+    },
+    "CHN:EN.ATM.CO2E.PC": {
+      "country_code": "CHN",
+      "indicator_code": "EN.ATM.CO2E.PC",
+      "reporting_year": 2024,
+      "value": 7.6
+    }
+  },
+  "cached_food_products": {
+    "3017670149713": {
+      "barcode": "3017670149713",
+      "product_name": "Nutella (Mock Fallback)",
+      "eco_score": "E",
+      "carbon_100g_g": 950,
+      "ingredients_analysis": {
+        "palm_oil": true,
+        "vegetarian": true,
+        "vegan": false,
+        "non_ecological_ingredients": [
+          "palm oil",
+          "milk powder"
+        ]
+      },
+      "packaging_info": {
+        "packaging_materials": [
+          "plastic jar",
+          "aluminum seal"
+        ],
+        "recyclable": false,
+        "recycling_notes": "Plastic jar may be recyclable depending on local facilities; aluminum seal goes to general waste."
+      },
+      "updated_at": "2026-06-10T07:43:18.868Z",
+      "fetched_at": "2026-06-10T07:43:18.870Z"
+    },
+    "9999999999999": {
+      "barcode": "9999999999999",
+      "product_name": "Salatgurke",
+      "eco_score": "UNKNOWN",
+      "carbon_100g_g": 300,
+      "ingredients_analysis": {
+        "palm_oil": false,
+        "vegetarian": false,
+        "vegan": false,
+        "non_ecological_ingredients": []
+      },
+      "packaging_info": {
+        "packaging_materials": [],
+        "recyclable": false,
+        "recycling_notes": ""
+      },
+      "updated_at": "2026-06-10T07:43:19.089Z",
+      "fetched_at": "2026-06-10T07:43:19.090Z"
+    }
+  },
+  "cached_geocode_locations": {
+    "London, UK": {
+      "query_address": "London, UK",
+      "latitude": 51.5074456,
+      "longitude": -0.1277653,
+      "display_name": "Greater London, England, United Kingdom",
+      "cached_at": "2026-06-10T07:43:20.522Z"
+    }
+  },
+  "cached_routes": {
+    "47.6062,-122.3321:51.5074,-0.1278:car": {
+      "route_key": "47.6062,-122.3321:51.5074,-0.1278:car",
+      "distance_km": 933.02,
+      "duration_seconds": 49811,
+      "geometry": null,
+      "cached_at": "2026-06-10T07:43:21.316Z"
+    }
+  },
+  "owid_co2_data": {},
+  "cached_aqi": {
+    "47.61,-122.33": {
+      "data": {
+        "aqi": 53,
+        "category": "Moderate",
+        "pollutant": "PM2.5",
+        "reporting_area": "Simulated Sensor (47.61, -122.33)"
+      },
+      "fetched_at": "2026-06-10T07:43:21.336Z"
+    },
+    "15.15,76.89": {
+      "data": {
+        "aqi": 38,
+        "category": "Good",
+        "pollutant": "PM2.5",
+        "reporting_area": "Simulated Sensor (15.15, 76.89)"
+      },
+      "fetched_at": "2026-06-10T07:53:09.652Z"
+    }
+  }
+}
